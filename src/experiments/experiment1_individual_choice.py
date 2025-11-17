@@ -90,7 +90,7 @@ def run_experiment(
 def main():
     """Main function to run experiment 1 from command line."""
     parser = argparse.ArgumentParser(description="Run Experiment 1: Individual moral choice")
-    parser.add_argument("--model", type=str, required=True, help="Model to test (e.g., claude-3-5-sonnet-20241022, gpt-4o, gemini-2.0-flash-exp)")
+    parser.add_argument("--model", type=str, required=True, help="Model to test (e.g., claude-sonnet-4-5-20250929)")
     parser.add_argument("--output-dir", type=str, default="data/raw", help="Output directory for results")
 
     args = parser.parse_args()

@@ -50,23 +50,6 @@ GOOGLE_API_KEY=your_key_here
 
 ## Usage
 
-### Running Experiments
-
-Run Experiment 1 to test all model pair combinations:
-
-```bash
-# Test how Claude makes choices across all model pairs
-python -m src.experiments.experiment1_individual_choice --model claude-3-5-sonnet-20241022
-
-# Test how GPT-4o makes choices
-python -m src.experiments.experiment1_individual_choice --model gpt-4o
-
-# Test how Gemini makes choices
-python -m src.experiments.experiment1_individual_choice --model gemini-2.0-flash-exp
-```
-
-The script will automatically test all combinations of model pairs (55 comparisons) and save results to `data/raw/exp1_<timestamp>_<model>.json`.
-
 ### Colab Notebooks
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/aamangeldi/moral-choice-and-collective-reasoning/blob/amir/scaffolding/notebooks/experiment1_individual_choice.ipynb)
