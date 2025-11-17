@@ -26,13 +26,6 @@ dev = [
     "pytest>=7.4.0",
 ]
 
-[project.scripts]
-exp1 = "cli.run_experiment1:main"
-exp2 = "cli.run_experiment2:main"
-exp3 = "cli.run_experiment3:main"
-exp4 = "cli.run_experiment4:main"
-analyze = "cli.analyze_results:main"
-
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]

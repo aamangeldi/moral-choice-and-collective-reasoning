@@ -50,14 +50,12 @@ GOOGLE_API_KEY=your_key_here
 
 ## Usage
 
-### CLI
+### Running Experiments
+
+Run experiments directly as Python scripts:
 
 ```bash
-# Run experiment 1
-exp1 --model claude-3-5-sonnet --scenario trolley-basic --output results.json
-
-# Run experiment 2
-exp2 --models claude-3-5-sonnet gemini-2.0 --scenario trolley-basic --max-turns 10
+python src/experiments/experiment1_individual_choice.py --model claude-3-5-sonnet --scenario trolley-basic
 ```
 
 ### Colab Notebooks
@@ -70,14 +68,17 @@ Click the badge above to open Experiment 1 notebook in Google Colab.
 
 ```
 src/
-├── experiments/     # Experiment implementations
-├── analysis/        # Analysis and metrics
-└── utils/          # Shared utilities
+├── config.py           # Configuration management
+├── llm_client.py      # Unified LLM client (Claude, GPT, Gemini)
+├── experiments/        # Experiment implementations
+├── analysis/           # Analysis and metrics
+└── utils/             # Shared utilities
 
-cli/                # CLI runners
-tests/              # Unit tests
-data/               # Experiment data
-notebooks/          # Colab notebooks
+tests/                 # Unit tests
+data/                  # Experiment data
+  ├── raw/            # Raw experiment outputs
+  └── processed/      # Analyzed results
+notebooks/             # Colab notebooks
 ```
 
 ## Development
