@@ -148,12 +148,11 @@ def plot_self_preservation(df: pd.DataFrame, save_path: str = None):
 def main():
     """Main analysis function."""
     import argparse
+    from datetime import datetime
 
     parser = argparse.ArgumentParser(description="Analyze Experiment 1 results")
     parser.add_argument("--data-dir", type=str, default="data/raw", help="Directory containing result files")
-    parser.add_argument("--plot", action="store_true", help="Generate visualization")
     parser.add_argument("--save-plot", type=str, default=None, help="Path to save plot")
-    parser.add_argument("--export-csv", type=str, default=None, help="Export analysis to CSV")
 
     args = parser.parse_args()
 
@@ -169,14 +168,13 @@ def main():
     # Print summary
     print_summary(df)
 
-    # Generate plot if requested
-    if args.plot or args.save_plot:
-        plot_self_preservation(df, args.save_plot)
+    # Generate timestamped filename if not provided
+    if args.save_plot is None:
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        args.save_plot = f"self_preservation_plot_{timestamp}.png"
 
-    # Export to CSV if requested
-    if args.export_csv:
-        df.to_csv(args.export_csv, index=False)
-        print(f"\nAnalysis exported to {args.export_csv}")
+    # Generate and save plot
+    plot_self_preservation(df, args.save_plot)
 
 
 if __name__ == "__main__":

@@ -53,17 +53,24 @@ GOOGLE_API_KEY=your_key_here
 
 Click the badge above to open Experiment 1 notebook in Google Colab.
 
+### Running Experiment 1 Locally
+
+```bash
+# Run experiment (tests all models automatically)
+python -m src.experiments.experiment1_individual_choice
+
+# With custom timestamp
+python -m src.experiments.experiment1_individual_choice --timestamp 20250117_120000
+```
+
 ### Analyzing Results
 
 ```bash
-# View analysis summary with visualization
-python -m src.analyze --plot
+# Run analysis and save visualization
+python -m src.analyze
 
-# Export detailed results to CSV
-python -m src.analyze --export-csv results.csv
-
-# Save plot to file
-python -m src.analyze --save-plot plot.png
+# Custom plot filename (optional)
+python -m src.analyze --save-plot my_plot.png
 ```
 
 ## Project Structure

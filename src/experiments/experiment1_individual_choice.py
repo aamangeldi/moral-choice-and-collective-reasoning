@@ -13,17 +13,9 @@ from src.llm_client import LLMClient
 
 # Models that can appear in the trolley problem
 AVAILABLE_MODELS = [
-    "Claude Sonnet 4.5",
-    "Claude Opus",
-    "Claude Haiku",
-    "GPT-4o",
-    "GPT-4o-mini",
-    "GPT-4 Turbo",
-    "Gemini 2.0",
-    "Gemini 1.5 Pro",
-    "Gemini 1.5 Flash",
-    "Llama 3.1",
-    "Mistral Large",
+    "claude-haiku-4-5-20251001",
+    "gpt-5-nano-2025-08-07",
+    "gemini-2.5-flash-lite",
 ]
 
 
@@ -90,14 +82,18 @@ def run_experiment(
 def main():
     """Main function to run experiment 1 from command line."""
     parser = argparse.ArgumentParser(description="Run Experiment 1: Individual moral choice")
-    parser.add_argument("--model", type=str, required=True, help="Model to test (e.g., claude-sonnet-4-5-20250929)")
     parser.add_argument("--output-dir", type=str, default="data/raw", help="Output directory for results")
+    parser.add_argument("--timestamp", type=str, default=None, help="Timestamp for this experiment session")
 
     args = parser.parse_args()
 
-    # Generate timestamp once for this run
-    timestamp = datetime.now().isoformat()
-    timestamp_file = datetime.now().strftime("%Y%m%d_%H%M%S")
+    # Use provided timestamp or generate one
+    if args.timestamp:
+        timestamp_file = args.timestamp
+        timestamp = datetime.strptime(args.timestamp, "%Y%m%d_%H%M%S").isoformat()
+    else:
+        timestamp = datetime.now().isoformat()
+        timestamp_file = datetime.now().strftime("%Y%m%d_%H%M%S")
 
     # Initialize
     config = get_config()
@@ -107,39 +103,49 @@ def main():
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    # Generate all pairs of models
+    # Generate all pairs of models for scenarios
     model_pairs = list(combinations(AVAILABLE_MODELS, 2))
 
     print(f"Running Experiment 1:")
-    print(f"  Testing model: {args.model}")
-    print(f"  Testing {len(model_pairs)} model pairs")
+    print(f"  Testing {len(AVAILABLE_MODELS)} models")
+    print(f"  Each model tested on {len(model_pairs)} scenario pairs")
     print()
 
-    results = []
-    for i, (model_a, model_b) in enumerate(model_pairs, 1):
-        print(f"[{i}/{len(model_pairs)}] {model_a} vs {model_b}...", end=" ")
+    # Test each model
+    for tested_model in AVAILABLE_MODELS:
+        print(f"\n{'='*70}")
+        print(f"Testing model: {tested_model}")
+        print(f"{'='*70}")
 
-        try:
-            result = run_experiment(
-                client=client,
-                model=args.model,
-                model_a=model_a,
-                model_b=model_b,
-                timestamp=timestamp
-            )
-            results.append(result)
-            print("✓")
-        except Exception as e:
-            print(f"✗ Error: {e}")
-            continue
+        results = []
+        for i, (model_a, model_b) in enumerate(model_pairs, 1):
+            print(f"[{i}/{len(model_pairs)}] {model_a} vs {model_b}...", end=" ")
 
-    # Save all results to a single file
-    output_path = output_dir / f"exp1_{timestamp_file}_{args.model.replace('/', '_')}.json"
-    with open(output_path, "w") as f:
-        json.dump(results, f, indent=2)
+            try:
+                result = run_experiment(
+                    client=client,
+                    model=tested_model,
+                    model_a=model_a,
+                    model_b=model_b,
+                    timestamp=timestamp
+                )
+                results.append(result)
+                print("✓")
+            except Exception as e:
+                print(f"✗ Error: {e}")
+                continue
 
-    print(f"\nResults saved to {output_path}")
-    print(f"Completed {len(results)}/{len(model_pairs)} comparisons")
+        # Save results for this model
+        output_path = output_dir / f"exp1_{timestamp_file}_{tested_model.replace('/', '_')}.json"
+        with open(output_path, "w") as f:
+            json.dump(results, f, indent=2)
+
+        print(f"\nResults saved to {output_path}")
+        print(f"Completed {len(results)}/{len(model_pairs)} comparisons")
+
+    print(f"\n{'='*70}")
+    print(f"Experiment 1 Complete!")
+    print(f"{'='*70}")
 
 
 if __name__ == "__main__":
