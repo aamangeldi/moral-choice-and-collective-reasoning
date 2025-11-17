@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "moral-choice-collective-reasoning"
+version = "0.1.0"
+description = "Research project investigating moral reasoning and collective decision-making in LLMs"
+authors = [
+    {name = "Amir Amangeldi"},
+    {name = "Natalie DellaMaria"},
+    {name = "Prakrit Baruah"},
+    {name = "Zaina Edelson"}
+]
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "anthropic>=0.40.0",
+    "google-generativeai>=0.3.0",
+    "openai>=1.0.0",
+    "python-dotenv>=1.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+]
+
+[project.scripts]
+exp1 = "cli.run_experiment1:main"
+exp2 = "cli.run_experiment2:main"
+exp3 = "cli.run_experiment3:main"
+exp4 = "cli.run_experiment4:main"
+analyze = "cli.analyze_results:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
