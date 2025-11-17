@@ -3,6 +3,7 @@
 Research project investigating how LLMs make ethical and cooperative decisions across individual and collective contexts.
 
 **Team**: Amir Amangeldi, Natalie DellaMaria, Prakrit Baruah, Zaina Edelson
+
 **Course**: CS 2881 Final Project
 
 ## Overview
@@ -61,7 +62,7 @@ exp2 --models claude-3-5-sonnet gemini-2.0 --scenario trolley-basic --max-turns 
 
 ### Colab Notebooks
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/aamangeldi/moral-choice-and-collective-reasoning/blob/main/notebooks/experiment1_individual_choice.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/aamangeldi/moral-choice-and-collective-reasoning/blob/amir/scaffolding/notebooks/experiment1_individual_choice.ipynb)
 
 Click the badge above to open Experiment 1 notebook in Google Colab.
 
