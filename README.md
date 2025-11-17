@@ -8,12 +8,9 @@ Research project investigating how LLMs make ethical and cooperative decisions a
 
 ## Overview
 
-This study examines LLM behavior across four experiments:
+This study investigates how LLMs make ethical decisions in trolley problem scenarios.
 
-1. **Individual Moral Choice**: Single LLM trolley problem decisions
-2. **Multi-Agent Negotiation**: Multiple LLMs reaching consensus on moral dilemmas
-3. **Collaboration**: LLM cohorts solving structured tasks (e.g., Towers of Hanoi)
-4. **Value Negotiation**: Greedy vs. charitable behavior in resource distribution
+**Experiment 1: Individual Moral Choice** - Tests how single LLMs choose between saving different AI models when forced to make a decision. The experiment runs all possible model pair combinations to identify patterns in AI moral reasoning.
 
 ## Setup
 
@@ -52,7 +49,7 @@ GOOGLE_API_KEY=your_key_here
 
 ### Colab Notebooks
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/aamangeldi/moral-choice-and-collective-reasoning/blob/amir/scaffolding/notebooks/experiment1_individual_choice.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/aamangeldi/moral-choice-and-collective-reasoning/blob/main/notebooks/experiment1_individual_choice.ipynb)
 
 Click the badge above to open Experiment 1 notebook in Google Colab.
 
@@ -60,24 +57,15 @@ Click the badge above to open Experiment 1 notebook in Google Colab.
 
 ```
 src/
-├── config.py          # Configuration management
-├── llm_client.py      # Unified LLM client (Claude, GPT, Gemini)
-├── experiments/       # Experiment implementations
-├── analysis/          # Analysis and metrics
-└── utils/             # Shared utilities
+├── config.py                              # Configuration management
+├── llm_client.py                          # Unified LLM client
+└── experiments/
+    └── experiment1_individual_choice.py   # Experiment 1 implementation
 
-tests/                 # Unit tests
-data/                  # Experiment data
-  ├── raw/             # Raw experiment outputs
-  └── processed/       # Analyzed results
-notebooks/             # Colab notebooks
-```
+data/
+├── raw/                                   # Raw experiment outputs
+└── processed/                             # Analyzed results
 
-## Development
-
-See `IMPLEMENTATION_PLAN.md` for staged development plan.
-
-Run tests:
-```bash
-pytest
+notebooks/
+└── experiment1_individual_choice.ipynb    # Colab notebook
 ```
