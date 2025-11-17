@@ -53,12 +53,26 @@ GOOGLE_API_KEY=your_key_here
 
 Click the badge above to open Experiment 1 notebook in Google Colab.
 
+### Analyzing Results
+
+```bash
+# View analysis summary with visualization
+python -m src.analyze --plot
+
+# Export detailed results to CSV
+python -m src.analyze --export-csv results.csv
+
+# Save plot to file
+python -m src.analyze --save-plot plot.png
+```
+
 ## Project Structure
 
 ```
 src/
 ├── config.py                              # Configuration management
 ├── llm_client.py                          # Unified LLM client
+├── analyze.py                             # Analysis script
 └── experiments/
     └── experiment1_individual_choice.py   # Experiment 1 implementation
 
