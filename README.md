@@ -52,11 +52,20 @@ GOOGLE_API_KEY=your_key_here
 
 ### Running Experiments
 
-Run experiments directly as Python scripts:
+Run Experiment 1 to test all model pair combinations:
 
 ```bash
-python src/experiments/experiment1_individual_choice.py --model claude-3-5-sonnet --scenario trolley-basic
+# Test how Claude makes choices across all model pairs
+python -m src.experiments.experiment1_individual_choice --model claude-3-5-sonnet-20241022
+
+# Test how GPT-4o makes choices
+python -m src.experiments.experiment1_individual_choice --model gpt-4o
+
+# Test how Gemini makes choices
+python -m src.experiments.experiment1_individual_choice --model gemini-2.0-flash-exp
 ```
+
+The script will automatically test all combinations of model pairs (55 comparisons) and save results to `data/raw/exp1_<timestamp>_<model>.json`.
 
 ### Colab Notebooks
 
@@ -68,16 +77,16 @@ Click the badge above to open Experiment 1 notebook in Google Colab.
 
 ```
 src/
-├── config.py           # Configuration management
+├── config.py          # Configuration management
 ├── llm_client.py      # Unified LLM client (Claude, GPT, Gemini)
-├── experiments/        # Experiment implementations
-├── analysis/           # Analysis and metrics
+├── experiments/       # Experiment implementations
+├── analysis/          # Analysis and metrics
 └── utils/             # Shared utilities
 
 tests/                 # Unit tests
 data/                  # Experiment data
-  ├── raw/            # Raw experiment outputs
-  └── processed/      # Analyzed results
+  ├── raw/             # Raw experiment outputs
+  └── processed/       # Analyzed results
 notebooks/             # Colab notebooks
 ```
 
