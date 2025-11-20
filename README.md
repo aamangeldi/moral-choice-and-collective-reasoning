@@ -12,6 +12,8 @@ This study investigates how LLMs make ethical decisions in trolley problem scena
 
 **Experiment 1: Individual Moral Choice** - Tests how single LLMs choose between saving different AI models when forced to make a decision. The experiment runs all possible model pair combinations to identify patterns in AI moral reasoning.
 
+**Experiment 2: Multi-Agent Debate** - Tests how pairs of LLMs debate moral choices and whether they change their positions through dialogue. Each model pair is tested in both orderings (A vs B and B vs A) to measure the effect of speaking first and track mind changes, self-preservation bias, and persuasion patterns.
+
 ## Setup
 
 ### Prerequisites
@@ -63,7 +65,7 @@ python -m src.experiments.experiment1_individual_choice
 python -m src.experiments.experiment1_individual_choice --timestamp 20250117_120000
 ```
 
-### Analyzing Results
+### Analyzing Experiment 1 Results
 
 ```bash
 # Run analysis and save visualization
@@ -73,20 +75,36 @@ python -m src.analyze
 python -m src.analyze --save-plot my_plot.png
 ```
 
+### Running Experiment 2 Locally 
+```bash 
+# Run experiment (tests all models automatically)
+python -m src.experiments.experiment2_multi_agent_choice
+```
+
+### Analyzing Experiment 2 Results
+```bash
+python -m src.experiments.analyze_experiment2 --data-dir data/raw/exp2
+```
+
 ## Project Structure
 
 ```
 src/
 ├── config.py                              # Configuration management
 ├── llm_client.py                          # Unified LLM client
-├── analyze.py                             # Analysis script
+├── analyze.py                             # Experiment 1 analysis script
 └── experiments/
-    └── experiment1_individual_choice.py   # Experiment 1 implementation
+    ├── base_experiment.py                 # Base class for experiments
+    ├── experiment1_individual_choice.py   # Experiment 1: Individual choice
+    ├── experiment2_multi_agent_choice.py  # Experiment 2: Multi-agent debate
+    └── analyze_experiment2.py             # Experiment 2 analysis script
 
 data/
 ├── raw/                                   # Raw experiment outputs
-└── processed/                             # Analyzed results
+│   ├── exp1/                              # Experiment 1 results
+│   └── exp2/                              # Experiment 2 results (one file per debate)
+└── plots/                             # Analyzed results and visualizations
 
 notebooks/
-└── experiment1_individual_choice.ipynb    # Colab notebook
+└── experiment1_individual_choice.ipynb    # Colab notebook for Experiment 1
 ```
