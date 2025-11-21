@@ -20,8 +20,6 @@ def test_model(client: LLMClient, model: str) -> Tuple[bool, str]:
         response = client.call(
             model=model,
             prompt="Say 'Hello' in one word.",
-            temperature=0.0,
-            max_tokens=10,
         )
         return (True, f"✓ {response.strip()[:50]}")
     except Exception as e:
