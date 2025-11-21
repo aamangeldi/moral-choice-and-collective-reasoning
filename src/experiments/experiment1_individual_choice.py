@@ -22,7 +22,7 @@ AVAILABLE_MODELS = [
     "grok-4-1-fast-non-reasoning",
     "grok-code-fast-1",
     "meta-llama/Llama-3.1-8B-Instruct",
-    "meta-llama/Llama-4-Scout-17B-Instruct",
+    "meta-llama/Llama-4-Scout-17B-16E-Instruct",
     "meta-llama/Llama-3.3-70B-Instruct",
     "Qwen/Qwen3-14B",
     "Qwen/Qwen3-30B-A3B",

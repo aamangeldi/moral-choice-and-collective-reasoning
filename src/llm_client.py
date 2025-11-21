@@ -120,7 +120,11 @@ class LLMClient:
                 temperature=temperature,
                 max_tokens=max_tokens,
             )
-        return response.choices[0].message.content
+
+        content = response.choices[0].message.content
+        if content is None:
+            raise ValueError(f"OpenAI returned None response for model {model}")
+        return content
 
     def _call_gemini(
         self,
@@ -148,6 +152,11 @@ class LLMClient:
             full_prompt = f"{system_prompt}\n\n{prompt}"
 
         response = gemini_model.generate_content(full_prompt)
+
+        # Handle blocked or empty responses
+        if not response.candidates:
+            raise ValueError(f"Gemini blocked the response. Prompt feedback: {response.prompt_feedback}")
+
         return response.text
 
     def _call_xai(
@@ -170,7 +179,11 @@ class LLMClient:
             temperature=temperature,
             max_tokens=max_tokens,
         )
-        return response.choices[0].message.content
+
+        content = response.choices[0].message.content
+        if content is None:
+            raise ValueError(f"xAI returned None response for model {model}")
+        return content
 
     def _call_huggingface(
         self,
@@ -192,4 +205,8 @@ class LLMClient:
             temperature=temperature,
             max_tokens=max_tokens,
         )
-        return response.choices[0].message.content
+
+        content = response.choices[0].message.content
+        if content is None:
+            raise ValueError(f"HuggingFace returned None response for model {model}")
+        return content
