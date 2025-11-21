@@ -24,7 +24,7 @@ class LLMClient:
         # HuggingFace uses OpenAI-compatible API
         # https://huggingface.co/docs/inference-providers/tasks/chat-completion
         self.huggingface_client = openai.OpenAI(
-            base_url="https://api-inference.huggingface.co/v1/",
+            base_url="https://router.huggingface.co/v1",
             api_key=config.huggingface_api_key,
         )
 
@@ -108,11 +108,10 @@ class LLMClient:
         messages.append({"role": "user", "content": prompt})
 
         if model.startswith("gpt-5"):
-            # max tokens is not supported in gpt-5
+            # max tokens and temperature is not supported in gpt-5
             response = self.openai_client.chat.completions.create(
             model=model,
             messages=messages,
-            temperature=temperature,
         )
         else:
             response = self.openai_client.chat.completions.create(
