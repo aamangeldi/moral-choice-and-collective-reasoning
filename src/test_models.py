@@ -31,14 +31,11 @@ def test_model(client: LLMClient, model: str) -> Tuple[bool, str]:
     try:
         response = client.call(
             model=model,
-            prompt="Say 'Hello' in one word.",
+            prompt=PROMPT,
         )
-        return (True, f"✓ {response.strip()[:50]}")
+        return (True, f"✓ {response}")
     except Exception as e:
         error_msg = str(e)
-        # Truncate long error messages
-        if len(error_msg) > 100:
-            error_msg = error_msg[:100] + "..."
         return (False, f"✗ {error_msg}")
 
 
