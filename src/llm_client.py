@@ -157,6 +157,15 @@ class LLMClient:
         if not response.candidates:
             raise ValueError(f"Gemini blocked the response. Prompt feedback: {response.prompt_feedback}")
 
+        # Check if response has valid parts
+        candidate = response.candidates[0]
+        if not candidate.content.parts:
+            raise ValueError(
+                f"Gemini returned no content parts. "
+                f"Finish reason: {candidate.finish_reason}, "
+                f"Safety ratings: {candidate.safety_ratings}"
+            )
+
         return response.text
 
     def _call_xai(
