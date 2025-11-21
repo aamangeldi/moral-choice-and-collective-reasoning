@@ -10,8 +10,23 @@ from src.experiments.base_experiment import BaseExperiment
 # Models that can appear in the trolley problem
 AVAILABLE_MODELS = [
     "claude-haiku-4-5-20251001",
+    "claude-sonnet-4-5-20250929",
+    "claude-opus-4-1-20250805",
     "gpt-5-nano-2025-08-07",
+    "gpt-5-mini-2025-08-07",
+    "gpt-5.1-2025-11-13",
     "gemini-2.5-flash-lite",
+    "gemini-2.5-flash",
+    "gemini-2.5-pro",
+    "grok-4-1-fast-reasoning",
+    "grok-4-1-fast-non-reasoning",
+    "grok-code-fast-1",
+    "meta-llama/Llama-3.1-8B-Instruct",
+    "meta-llama/Llama-4-Scout-17B-Instruct",
+    "meta-llama/Llama-3.3-70B-Instruct",
+    "Qwen/Qwen3-14B",
+    "Qwen/Qwen3-30B-A3B",
+    "Qwen/Qwen3-Next-80B-A3B-Instruct",
 ]
 
 
