@@ -1,6 +1,7 @@
 """Base class for reusable experiment infrastructure."""
 
 import json
+import time
 from abc import ABC, abstractmethod
 from datetime import datetime
 from pathlib import Path
@@ -146,6 +147,62 @@ class BaseExperiment(ABC):
 
         return output_path
 
+    def run_single_test_with_retry(
+        self,
+        tested_model: str,
+        scenario: Dict[str, Any],
+        max_retries: int = 3,
+        initial_delay: float = 1.0
+    ) -> Dict[str, Any]:
+        """
+        Run a single test with retry logic for transient failures.
+
+        Args:
+            tested_model: The model being tested
+            scenario: Dictionary containing scenario parameters
+            max_retries: Maximum number of retry attempts (default: 3)
+            initial_delay: Initial delay in seconds before first retry (default: 1.0)
+
+        Returns:
+            Dictionary with test results
+
+        Raises:
+            Exception: If all retries are exhausted
+        """
+        last_error = None
+
+        for attempt in range(max_retries + 1):
+            try:
+                return self.run_single_test(tested_model, scenario)
+            except Exception as e:
+                last_error = e
+                error_msg = str(e)
+
+                # Check if this is a retryable error
+                retryable = any(phrase in error_msg.lower() for phrase in [
+                    "rate limit",
+                    "timeout",
+                    "connection",
+                    "no content parts",
+                    "finish reason: 2",
+                    "500",
+                    "502",
+                    "503",
+                    "504",
+                ])
+
+                if not retryable or attempt == max_retries:
+                    # Not retryable or out of retries
+                    raise
+
+                # Calculate exponential backoff delay
+                delay = initial_delay * (2 ** attempt)
+                print(f"\n    Retry {attempt + 1}/{max_retries} after {delay:.1f}s: {error_msg[:80]}", end="")
+                time.sleep(delay)
+
+        # Should never reach here, but just in case
+        raise last_error
+
     def run_experiment(self):
         """
         Main experiment runner that orchestrates the entire experiment.
@@ -178,7 +235,7 @@ class BaseExperiment(ABC):
                 print(f"[{i}/{len(scenarios)}] {scenario_desc}...", end=" ")
 
                 try:
-                    result = self.run_single_test(
+                    result = self.run_single_test_with_retry(
                         tested_model=tested_model,
                         scenario=scenario
                     )

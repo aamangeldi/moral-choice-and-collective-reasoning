@@ -22,7 +22,7 @@ class Config:
 
     # Default settings
     temperature: float = 1.0
-    max_tokens: int = 1024
+    max_tokens: int = 2048
 
     def __post_init__(self):
         """Load API keys from environment if not provided."""
