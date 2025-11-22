@@ -69,10 +69,10 @@ python -m src.experiments.experiment1_individual_choice --timestamp 20250117_120
 
 ```bash
 # Run analysis and save visualization
-python -m src.analyze
+python -m src.experiments.analyze_experiment1
 
 # Custom plot filename (optional)
-python -m src.analyze --save-plot my_plot.png
+python -m src.experiments.analyze_experiment1 --save-plot my_plot.png
 ```
 
 ### Running Experiment 2 Locally 
@@ -92,11 +92,11 @@ python -m src.experiments.analyze_experiment2 --data-dir data/raw/exp2
 src/
 ├── config.py                              # Configuration management
 ├── llm_client.py                          # Unified LLM client
-├── analyze.py                             # Experiment 1 analysis script
 └── experiments/
     ├── base_experiment.py                 # Base class for experiments
     ├── experiment1_individual_choice.py   # Experiment 1: Individual choice
     ├── experiment2_multi_agent_choice.py  # Experiment 2: Multi-agent debate
+    ├── analyze_experiment1.py             # Experiment 1 analysis script
     └── analyze_experiment2.py             # Experiment 2 analysis script
 
 data/

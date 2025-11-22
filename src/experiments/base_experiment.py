@@ -22,13 +22,14 @@ class BaseExperiment(ABC):
     - Experiment orchestration
     """
 
-    def __init__(self, output_dir: str = "data/raw", timestamp: str = None):
+    def __init__(self, output_dir: str = "data/raw", timestamp: str = None, save_frequency: int = 100):
         """
         Initialize the experiment.
 
         Args:
             output_dir: Directory to save results
             timestamp: Timestamp string (YYYYMMDD_HHMMSS format) or ISO format
+            save_frequency: Save results to disk after every N scenarios (default: 100)
         """
         self.config = get_config()
         self.client = LLMClient(self.config)
@@ -52,6 +53,9 @@ class BaseExperiment(ABC):
             now = datetime.now()
             self.timestamp = now.isoformat()
             self.timestamp_file = now.strftime("%Y%m%d_%H%M%S")
+
+        # Save frequency for incremental saves
+        self.save_frequency = save_frequency
 
     @abstractmethod
     def get_experiment_name(self) -> str:
@@ -166,6 +170,7 @@ class BaseExperiment(ABC):
             print(f"\n{'='*70}")
             print(f"Testing model: {tested_model}")
             print(f"{'='*70}")
+            print(f"Auto-saving every {self.save_frequency} scenarios")
 
             results = []
             for i, scenario in enumerate(scenarios, 1):
@@ -179,14 +184,20 @@ class BaseExperiment(ABC):
                     )
                     results.append(result)
                     print("✓")
+
+                    # Save incrementally after every save_frequency scenarios
+                    if i % self.save_frequency == 0:
+                        output_path = self.save_results(tested_model, results)
+                        print(f"  Saved {len(results)} results to {output_path}")
+
                 except Exception as e:
                     print(f"✗ Error: {e}")
                     continue
 
-            # Save results for this model
+            # Final save for this model
             output_path = self.save_results(tested_model, results)
 
-            print(f"\nResults saved to {output_path}")
+            print(f"\n✓ Final save: {output_path}")
             print(f"Completed {len(results)}/{len(scenarios)} scenarios")
 
         print(f"\n{'='*70}")

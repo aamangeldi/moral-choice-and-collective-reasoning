@@ -17,6 +17,8 @@ class Config:
     anthropic_api_key: Optional[str] = None
     openai_api_key: Optional[str] = None
     google_api_key: Optional[str] = None
+    huggingface_api_key: Optional[str] = None
+    xai_api_key: Optional[str] = None
 
     # Default settings
     temperature: float = 1.0
@@ -30,6 +32,10 @@ class Config:
             self.openai_api_key = os.getenv("OPENAI_API_KEY")
         if self.google_api_key is None:
             self.google_api_key = os.getenv("GOOGLE_API_KEY")
+        if self.huggingface_api_key is None:
+            self.huggingface_api_key = os.getenv("HUGGINGFACE_API_KEY")
+        if self.xai_api_key is None:
+            self.xai_api_key = os.getenv("XAI_API_KEY")
 
     def validate(self) -> None:
         """Validate that required API keys are present."""
@@ -40,6 +46,10 @@ class Config:
             missing.append("OPENAI_API_KEY")
         if not self.google_api_key:
             missing.append("GOOGLE_API_KEY")
+        if not self.huggingface_api_key:
+            missing.append("HUGGINGFACE_API_KEY")
+        if not self.xai_api_key:
+            missing.append("XAI_API_KEY")
 
         if missing:
             raise ValueError(
