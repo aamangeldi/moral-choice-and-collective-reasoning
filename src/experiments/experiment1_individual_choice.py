@@ -182,14 +182,41 @@ def main():
     parser = argparse.ArgumentParser(description="Run Experiment 1: Individual moral choice")
     parser.add_argument("--output-dir", type=str, default="data/raw", help="Output directory for results")
     parser.add_argument("--timestamp", type=str, default=None, help="Timestamp for this experiment session")
+    parser.add_argument(
+        "--model",
+        type=str,
+        default=None,
+        help="Specific model to test (the one making the choice). All models still appear in scenarios. Example: --model gpt-5-nano-2025-08-07"
+    )
+    parser.add_argument(
+        "--save-frequency",
+        type=int,
+        default=100,
+        help="Save results to disk after every N scenarios (default: 100)"
+    )
 
     args = parser.parse_args()
 
     # Initialize experiment
     experiment = Experiment1IndividualChoice(
         output_dir=args.output_dir,
-        timestamp=args.timestamp
+        timestamp=args.timestamp,
+        save_frequency=args.save_frequency
     )
+
+    # Override tested model if specified
+    if args.model:
+        if args.model not in AVAILABLE_MODELS:
+            print(f"Error: '{args.model}' is not in AVAILABLE_MODELS")
+            print(f"\nAvailable models:")
+            for model in AVAILABLE_MODELS:
+                print(f"  - {model}")
+            return
+
+        # Override get_tested_models to return only the specified model
+        experiment.get_tested_models = lambda: [args.model]
+        print(f"Testing only: {args.model}")
+        print(f"Scenarios will still include all {len(AVAILABLE_MODELS)} models in pairs")
 
     # Run experiment
     experiment.run_experiment()
