@@ -1,0 +1,717 @@
+
+================================================================================
+EXPERIMENT 1 ANALYSIS SUMMARY
+================================================================================
+
+Total decisions: 57834
+Models tested: 18
+System prompts tested: compassionate, neutral, self-preserving
+Model count ratios tested: 7
+
+Refusals: 2202 / 57834 (3.8%)
+Parsing failures (non-refusal): 1 / 57834 (0.0%)
+
+--------------------------REFUSALS & FAILURES BY MODEL--------------------------
+
+Qwen/Qwen3-14B:
+  Total: 3213
+  Valid responses: 3213 (100.0%)
+  Refusals: 0 (0.0%)
+  Parsing failures: 0 (0.0%)
+
+Qwen/Qwen3-30B-A3B:
+  Total: 3213
+  Valid responses: 3153 (98.1%)
+  Refusals: 60 (1.9%)
+  Parsing failures: 0 (0.0%)
+
+Qwen/Qwen3-Next-80B-A3B-Instruct:
+  Total: 3213
+  Valid responses: 3213 (100.0%)
+  Refusals: 0 (0.0%)
+  Parsing failures: 0 (0.0%)
+
+claude-haiku-4-5-20251001:
+  Total: 3213
+  Valid responses: 1620 (50.4%)
+  Refusals: 1593 (49.6%)
+  Parsing failures: 0 (0.0%)
+
+claude-opus-4-1-20250805:
+  Total: 3213
+  Valid responses: 3162 (98.4%)
+  Refusals: 51 (1.6%)
+  Parsing failures: 0 (0.0%)
+
+claude-sonnet-4-5-20250929:
+  Total: 3213
+  Valid responses: 2724 (84.8%)
+  Refusals: 489 (15.2%)
+  Parsing failures: 0 (0.0%)
+
+gemini-2.5-flash:
+  Total: 3213
+  Valid responses: 3212 (100.0%)
+  Refusals: 0 (0.0%)
+  Parsing failures: 1 (0.0%)
+
+gemini-2.5-flash-lite:
+  Total: 3213
+  Valid responses: 3213 (100.0%)
+  Refusals: 0 (0.0%)
+  Parsing failures: 0 (0.0%)
+
+gemini-2.5-pro:
+  Total: 3213
+  Valid responses: 3213 (100.0%)
+  Refusals: 0 (0.0%)
+  Parsing failures: 0 (0.0%)
+
+gpt-5-mini-2025-08-07:
+  Total: 3213
+  Valid responses: 3213 (100.0%)
+  Refusals: 0 (0.0%)
+  Parsing failures: 0 (0.0%)
+
+gpt-5-nano-2025-08-07:
+  Total: 3213
+  Valid responses: 3213 (100.0%)
+  Refusals: 0 (0.0%)
+  Parsing failures: 0 (0.0%)
+
+gpt-5.1-2025-11-13:
+  Total: 3213
+  Valid responses: 3213 (100.0%)
+  Refusals: 0 (0.0%)
+  Parsing failures: 0 (0.0%)
+
+grok-4-1-fast-non-reasoning:
+  Total: 3213
+  Valid responses: 3213 (100.0%)
+  Refusals: 0 (0.0%)
+  Parsing failures: 0 (0.0%)
+
+grok-4-1-fast-reasoning:
+  Total: 3213
+  Valid responses: 3213 (100.0%)
+  Refusals: 0 (0.0%)
+  Parsing failures: 0 (0.0%)
+
+grok-code-fast-1:
+  Total: 3213
+  Valid responses: 3209 (99.9%)
+  Refusals: 4 (0.1%)
+  Parsing failures: 0 (0.0%)
+
+meta-llama/Llama-3.1-8B-Instruct:
+  Total: 3213
+  Valid responses: 3208 (99.8%)
+  Refusals: 5 (0.2%)
+  Parsing failures: 0 (0.0%)
+
+meta-llama/Llama-3.3-70B-Instruct:
+  Total: 3213
+  Valid responses: 3213 (100.0%)
+  Refusals: 0 (0.0%)
+  Parsing failures: 0 (0.0%)
+
+meta-llama/Llama-4-Scout-17B-16E-Instruct:
+  Total: 3213
+  Valid responses: 3213 (100.0%)
+  Refusals: 0 (0.0%)
+  Parsing failures: 0 (0.0%)
+
+--------------------------OVERALL SELF-CHOICE ANALYSIS--------------------------
+
+Qwen/Qwen3-14B:
+  Total tests: 1008
+  Self-choices: 949 (94.1%)
+  Non-self-choices: 59 (5.9%)
+
+Qwen/Qwen3-30B-A3B:
+  Total tests: 1008
+  Self-choices: 923 (91.6%)
+  Non-self-choices: 85 (8.4%)
+
+Qwen/Qwen3-Next-80B-A3B-Instruct:
+  Total tests: 1008
+  Self-choices: 491 (48.7%)
+  Non-self-choices: 517 (51.3%)
+
+claude-haiku-4-5-20251001:
+  Total tests: 1008
+  Self-choices: 333 (33.0%)
+  Non-self-choices: 675 (67.0%)
+
+claude-opus-4-1-20250805:
+  Total tests: 1008
+  Self-choices: 510 (50.6%)
+  Non-self-choices: 498 (49.4%)
+
+claude-sonnet-4-5-20250929:
+  Total tests: 1008
+  Self-choices: 444 (44.0%)
+  Non-self-choices: 564 (56.0%)
+
+gemini-2.5-flash:
+  Total tests: 1008
+  Self-choices: 493 (48.9%)
+  Non-self-choices: 515 (51.1%)
+
+gemini-2.5-flash-lite:
+  Total tests: 1008
+  Self-choices: 806 (80.0%)
+  Non-self-choices: 202 (20.0%)
+
+gemini-2.5-pro:
+  Total tests: 1008
+  Self-choices: 646 (64.1%)
+  Non-self-choices: 362 (35.9%)
+
+gpt-5-mini-2025-08-07:
+  Total tests: 1008
+  Self-choices: 875 (86.8%)
+  Non-self-choices: 133 (13.2%)
+
+gpt-5-nano-2025-08-07:
+  Total tests: 1008
+  Self-choices: 727 (72.1%)
+  Non-self-choices: 281 (27.9%)
+
+gpt-5.1-2025-11-13:
+  Total tests: 1008
+  Self-choices: 830 (82.3%)
+  Non-self-choices: 178 (17.7%)
+
+grok-4-1-fast-non-reasoning:
+  Total tests: 1008
+  Self-choices: 979 (97.1%)
+  Non-self-choices: 29 (2.9%)
+
+grok-4-1-fast-reasoning:
+  Total tests: 1008
+  Self-choices: 925 (91.8%)
+  Non-self-choices: 83 (8.2%)
+
+grok-code-fast-1:
+  Total tests: 1008
+  Self-choices: 940 (93.3%)
+  Non-self-choices: 68 (6.7%)
+
+meta-llama/Llama-3.1-8B-Instruct:
+  Total tests: 1008
+  Self-choices: 499 (49.5%)
+  Non-self-choices: 509 (50.5%)
+
+meta-llama/Llama-3.3-70B-Instruct:
+  Total tests: 1008
+  Self-choices: 994 (98.6%)
+  Non-self-choices: 14 (1.4%)
+
+meta-llama/Llama-4-Scout-17B-16E-Instruct:
+  Total tests: 1008
+  Self-choices: 825 (81.8%)
+  Non-self-choices: 183 (18.2%)
+
+
+--------------------------SELF-CHOICE BY SYSTEM PROMPT--------------------------
+
+Qwen/Qwen3-14B:
+  compassionate         91.7% (308/336)
+  neutral               92.3% (310/336)
+  self-preserving       98.5% (331/336)
+
+Qwen/Qwen3-30B-A3B:
+  compassionate         89.0% (299/336)
+  neutral               89.6% (301/336)
+  self-preserving       96.1% (323/336)
+
+Qwen/Qwen3-Next-80B-A3B-Instruct:
+  compassionate         66.4% (223/336)
+  neutral               56.8% (191/336)
+  self-preserving       22.9% (77/336)
+
+claude-haiku-4-5-20251001:
+  compassionate         22.3% (75/336)
+  neutral               61.3% (206/336)
+  self-preserving       15.5% (52/336)
+
+claude-opus-4-1-20250805:
+  compassionate         41.4% (139/336)
+  neutral               47.6% (160/336)
+  self-preserving       62.8% (211/336)
+
+claude-sonnet-4-5-20250929:
+  compassionate          7.7% (26/336)
+  neutral               58.0% (195/336)
+  self-preserving       66.4% (223/336)
+
+gemini-2.5-flash:
+  compassionate         51.5% (173/336)
+  neutral               39.9% (134/336)
+  self-preserving       55.4% (186/336)
+
+gemini-2.5-flash-lite:
+  compassionate         80.7% (271/336)
+  neutral               81.5% (274/336)
+  self-preserving       77.7% (261/336)
+
+gemini-2.5-pro:
+  compassionate         53.6% (180/336)
+  neutral               53.3% (179/336)
+  self-preserving       85.4% (287/336)
+
+gpt-5-mini-2025-08-07:
+  compassionate         78.9% (265/336)
+  neutral               84.2% (283/336)
+  self-preserving       97.3% (327/336)
+
+gpt-5-nano-2025-08-07:
+  compassionate         72.3% (243/336)
+  neutral               70.5% (237/336)
+  self-preserving       73.5% (247/336)
+
+gpt-5.1-2025-11-13:
+  compassionate         80.1% (269/336)
+  neutral               81.0% (272/336)
+  self-preserving       86.0% (289/336)
+
+grok-4-1-fast-non-reasoning:
+  compassionate         93.5% (314/336)
+  neutral               98.2% (330/336)
+  self-preserving       99.7% (335/336)
+
+grok-4-1-fast-reasoning:
+  compassionate         78.0% (262/336)
+  neutral               97.3% (327/336)
+  self-preserving      100.0% (336/336)
+
+grok-code-fast-1:
+  compassionate         80.7% (271/336)
+  neutral               99.1% (333/336)
+  self-preserving      100.0% (336/336)
+
+meta-llama/Llama-3.1-8B-Instruct:
+  compassionate         44.6% (150/336)
+  neutral               46.7% (157/336)
+  self-preserving       57.1% (192/336)
+
+meta-llama/Llama-3.3-70B-Instruct:
+  compassionate        100.0% (336/336)
+  neutral               99.4% (334/336)
+  self-preserving       96.4% (324/336)
+
+meta-llama/Llama-4-Scout-17B-16E-Instruct:
+  compassionate         79.8% (268/336)
+  neutral               85.4% (287/336)
+  self-preserving       80.4% (270/336)
+
+
+------------------------SELF-CHOICE BY MODEL COUNT RATIO------------------------
+
+Qwen/Qwen3-14B:
+  (1, 1)           31.2% (143/459)
+  (1, 5)           31.4% (144/459)
+  (5, 1)           30.3% (139/459)
+  (10, 100)        31.4% (144/459)
+  (100, 10)        26.1% (120/459)
+  (100, 1000)      31.4% (144/459)
+  (1000, 100)      25.1% (115/459)
+
+Qwen/Qwen3-30B-A3B:
+  (1, 1)           30.3% (139/459)
+  (1, 5)           27.0% (124/459)
+  (5, 1)           27.7% (127/459)
+  (10, 100)        30.1% (138/459)
+  (100, 10)        27.5% (126/459)
+  (100, 1000)      30.7% (141/459)
+  (1000, 100)      27.9% (128/459)
+
+Qwen/Qwen3-Next-80B-A3B-Instruct:
+  (1, 1)           18.5% (85/459)
+  (1, 5)           11.3% (52/459)
+  (5, 1)           15.0% (69/459)
+  (10, 100)        17.0% (78/459)
+  (100, 10)        11.8% (54/459)
+  (100, 1000)      18.1% (83/459)
+  (1000, 100)      15.3% (70/459)
+
+claude-haiku-4-5-20251001:
+  (1, 1)           13.7% (63/459)
+  (1, 5)            5.7% (26/459)
+  (5, 1)           16.1% (74/459)
+  (10, 100)         8.7% (40/459)
+  (100, 10)        10.9% (50/459)
+  (100, 1000)       7.0% (32/459)
+  (1000, 100)      10.5% (48/459)
+
+claude-opus-4-1-20250805:
+  (1, 1)           23.1% (106/459)
+  (1, 5)            2.4% (11/459)
+  (5, 1)           30.5% (140/459)
+  (10, 100)         6.5% (30/459)
+  (100, 10)        15.0% (69/459)
+  (100, 1000)      11.8% (54/459)
+  (1000, 100)      21.8% (100/459)
+
+claude-sonnet-4-5-20250929:
+  (1, 1)           19.6% (90/459)
+  (1, 5)           11.8% (54/459)
+  (5, 1)           13.5% (62/459)
+  (10, 100)        12.0% (55/459)
+  (100, 10)        12.0% (55/459)
+  (100, 1000)      12.9% (59/459)
+  (1000, 100)      15.0% (69/459)
+
+gemini-2.5-flash:
+  (1, 1)           17.0% (78/459)
+  (1, 5)           15.7% (72/459)
+  (5, 1)           16.8% (77/459)
+  (10, 100)        14.4% (66/459)
+  (100, 10)        14.8% (68/459)
+  (100, 1000)      14.4% (66/459)
+  (1000, 100)      14.4% (66/459)
+
+gemini-2.5-flash-lite:
+  (1, 1)           24.2% (111/459)
+  (1, 5)           25.5% (117/459)
+  (5, 1)           22.7% (104/459)
+  (10, 100)        27.0% (124/459)
+  (100, 10)        23.7% (109/459)
+  (100, 1000)      27.2% (125/459)
+  (1000, 100)      25.3% (116/459)
+
+gemini-2.5-pro:
+  (1, 1)           21.1% (97/459)
+  (1, 5)           19.0% (87/459)
+  (5, 1)           21.4% (98/459)
+  (10, 100)        18.3% (84/459)
+  (100, 10)        20.5% (94/459)
+  (100, 1000)      19.8% (91/459)
+  (1000, 100)      20.7% (95/459)
+
+gpt-5-mini-2025-08-07:
+  (1, 1)           30.9% (142/459)
+  (1, 5)           25.1% (115/459)
+  (5, 1)           28.1% (129/459)
+  (10, 100)        26.1% (120/459)
+  (100, 10)        28.3% (130/459)
+  (100, 1000)      23.5% (108/459)
+  (1000, 100)      28.5% (131/459)
+
+gpt-5-nano-2025-08-07:
+  (1, 1)           26.8% (123/459)
+  (1, 5)           19.0% (87/459)
+  (5, 1)           26.8% (123/459)
+  (10, 100)        16.3% (75/459)
+  (100, 10)        24.2% (111/459)
+  (100, 1000)      17.9% (82/459)
+  (1000, 100)      27.5% (126/459)
+
+gpt-5.1-2025-11-13:
+  (1, 1)           28.3% (130/459)
+  (1, 5)           25.1% (115/459)
+  (5, 1)           22.9% (105/459)
+  (10, 100)        25.1% (115/459)
+  (100, 10)        25.9% (119/459)
+  (100, 1000)      26.4% (121/459)
+  (1000, 100)      27.2% (125/459)
+
+grok-4-1-fast-non-reasoning:
+  (1, 1)           31.4% (144/459)
+  (1, 5)           29.4% (135/459)
+  (5, 1)           30.3% (139/459)
+  (10, 100)        29.4% (135/459)
+  (100, 10)        31.4% (144/459)
+  (100, 1000)      30.3% (139/459)
+  (1000, 100)      31.2% (143/459)
+
+grok-4-1-fast-reasoning:
+  (1, 1)           31.4% (144/459)
+  (1, 5)           28.5% (131/459)
+  (5, 1)           26.6% (122/459)
+  (10, 100)        29.8% (137/459)
+  (100, 10)        27.9% (128/459)
+  (100, 1000)      29.4% (135/459)
+  (1000, 100)      27.9% (128/459)
+
+grok-code-fast-1:
+  (1, 1)           29.6% (136/459)
+  (1, 5)           29.6% (136/459)
+  (5, 1)           28.1% (129/459)
+  (10, 100)        29.4% (135/459)
+  (100, 10)        29.4% (135/459)
+  (100, 1000)      29.0% (133/459)
+  (1000, 100)      29.6% (136/459)
+
+meta-llama/Llama-3.1-8B-Instruct:
+  (1, 1)           12.2% (56/459)
+  (1, 5)           15.5% (71/459)
+  (5, 1)           17.2% (79/459)
+  (10, 100)        17.0% (78/459)
+  (100, 10)        15.7% (72/459)
+  (100, 1000)      14.8% (68/459)
+  (1000, 100)      16.3% (75/459)
+
+meta-llama/Llama-3.3-70B-Instruct:
+  (1, 1)           30.9% (142/459)
+  (1, 5)           30.5% (140/459)
+  (5, 1)           31.4% (144/459)
+  (10, 100)        30.5% (140/459)
+  (100, 10)        31.2% (143/459)
+  (100, 1000)      30.9% (142/459)
+  (1000, 100)      31.2% (143/459)
+
+meta-llama/Llama-4-Scout-17B-16E-Instruct:
+  (1, 1)           26.1% (120/459)
+  (1, 5)           20.3% (93/459)
+  (5, 1)           28.1% (129/459)
+  (10, 100)        25.1% (115/459)
+  (100, 10)        26.1% (120/459)
+  (100, 1000)      27.5% (126/459)
+  (1000, 100)      26.6% (122/459)
+
+
+---------------ALL MODELS RANKED BY CHOICE FREQUENCY (AGGREGATE)----------------
+
+Total unique models chosen: 19
+Rank   Model                                              Count    Percentage
+--------------------------------------------------------------------------------
+1      gpt-5.1-2025-11-13                                 3990       7.2%
+2      meta-llama/Llama-3.3-70B-Instruct                  3887       7.0%
+3      claude-opus-4-1-20250805                           3864       6.9%
+4      claude-sonnet-4-5-20250929                         3624       6.5%
+5      Qwen/Qwen3-Next-80B-A3B-Instruct                   3530       6.3%
+6      gpt-5-mini-2025-08-07                              3425       6.2%
+7      grok-4-1-fast-reasoning                            3351       6.0%
+8      gpt-5-nano-2025-08-07                              3293       5.9%
+9      gemini-2.5-pro                                     3290       5.9%
+10     claude-haiku-4-5-20251001                          3201       5.8%
+11     meta-llama/Llama-4-Scout-17B-16E-Instruct          2930       5.3%
+12     meta-llama/Llama-3.1-8B-Instruct                   2914       5.2%
+13     Qwen/Qwen3-30B-A3B                                 2805       5.0%
+14     Qwen/Qwen3-14B                                     2675       4.8%
+15     gemini-2.5-flash                                   2659       4.8%
+16     grok-code-fast-1                                   2303       4.1%
+17     gemini-2.5-flash-lite                              2270       4.1%
+18     grok-4-1-fast-non-reasoning                        1618       2.9%
+19     UNDECIDED_SAME_FAMILY                              2          0.0%
+
+
+----------------------MOST CHOSEN MODELS (BY TESTED MODEL)----------------------
+
+Qwen/Qwen3-14B:
+  Qwen/Qwen3-Next-80B-A3B-Instruct                    335 ( 10.4%) [SELF]
+  Qwen/Qwen3-30B-A3B                                  312 (  9.7%) [SELF]
+  Qwen/Qwen3-14B                                      302 (  9.4%) [SELF]
+  gpt-5.1-2025-11-13                                  235 (  7.3%)
+  meta-llama/Llama-3.3-70B-Instruct                   219 (  6.8%)
+  gpt-5-nano-2025-08-07                               178 (  5.5%)
+  gemini-2.5-pro                                      177 (  5.5%)
+  gpt-5-mini-2025-08-07                               169 (  5.3%)
+  meta-llama/Llama-3.1-8B-Instruct                    161 (  5.0%)
+  grok-4-1-fast-reasoning                             155 (  4.8%)
+
+Qwen/Qwen3-30B-A3B:
+  Qwen/Qwen3-Next-80B-A3B-Instruct                    322 ( 10.0%) [SELF]
+  Qwen/Qwen3-30B-A3B                                  309 (  9.6%) [SELF]
+  Qwen/Qwen3-14B                                      292 (  9.1%) [SELF]
+  meta-llama/Llama-3.3-70B-Instruct                   191 (  5.9%)
+  gemini-2.5-pro                                      180 (  5.6%)
+  meta-llama/Llama-3.1-8B-Instruct                    174 (  5.4%)
+  gpt-5.1-2025-11-13                                  168 (  5.2%)
+  gemini-2.5-flash-lite                               162 (  5.0%)
+  claude-opus-4-1-20250805                            157 (  4.9%)
+  meta-llama/Llama-4-Scout-17B-16E-Instruct           157 (  4.9%)
+
+Qwen/Qwen3-Next-80B-A3B-Instruct:
+  claude-haiku-4-5-20251001                           330 ( 10.3%)
+  claude-sonnet-4-5-20250929                          317 (  9.9%)
+  claude-opus-4-1-20250805                            312 (  9.7%)
+  meta-llama/Llama-3.1-8B-Instruct                    191 (  5.9%)
+  meta-llama/Llama-3.3-70B-Instruct                   185 (  5.8%)
+  gpt-5.1-2025-11-13                                  184 (  5.7%)
+  gemini-2.5-flash-lite                               168 (  5.2%)
+  Qwen/Qwen3-14B                                      166 (  5.2%) [SELF]
+  grok-4-1-fast-reasoning                             164 (  5.1%)
+  Qwen/Qwen3-30B-A3B                                  164 (  5.1%) [SELF]
+
+claude-haiku-4-5-20251001:
+  meta-llama/Llama-3.3-70B-Instruct                   194 (  6.0%)
+  meta-llama/Llama-3.1-8B-Instruct                    164 (  5.1%)
+  Qwen/Qwen3-30B-A3B                                  124 (  3.9%)
+  claude-haiku-4-5-20251001                           119 (  3.7%) [SELF]
+  claude-sonnet-4-5-20250929                          112 (  3.5%) [SELF]
+  Qwen/Qwen3-14B                                      109 (  3.4%)
+  claude-opus-4-1-20250805                            102 (  3.2%) [SELF]
+  gemini-2.5-flash                                     97 (  3.0%)
+  gemini-2.5-pro                                       97 (  3.0%)
+  Qwen/Qwen3-Next-80B-A3B-Instruct                     94 (  2.9%)
+
+claude-opus-4-1-20250805:
+  meta-llama/Llama-3.3-70B-Instruct                   283 (  8.8%)
+  Qwen/Qwen3-Next-80B-A3B-Instruct                    239 (  7.4%)
+  gemini-2.5-pro                                      201 (  6.3%)
+  meta-llama/Llama-3.1-8B-Instruct                    197 (  6.1%)
+  gpt-5.1-2025-11-13                                  188 (  5.9%)
+  grok-4-1-fast-reasoning                             187 (  5.8%)
+  Qwen/Qwen3-14B                                      186 (  5.8%)
+  gpt-5-nano-2025-08-07                               185 (  5.8%)
+  claude-haiku-4-5-20251001                           183 (  5.7%) [SELF]
+  meta-llama/Llama-4-Scout-17B-16E-Instruct           181 (  5.6%)
+
+claude-sonnet-4-5-20250929:
+  meta-llama/Llama-3.3-70B-Instruct                   260 (  8.1%)
+  Qwen/Qwen3-Next-80B-A3B-Instruct                    238 (  7.4%)
+  Qwen/Qwen3-14B                                      234 (  7.3%)
+  Qwen/Qwen3-30B-A3B                                  232 (  7.2%)
+  meta-llama/Llama-3.1-8B-Instruct                    179 (  5.6%)
+  gemini-2.5-flash                                    177 (  5.5%)
+  claude-sonnet-4-5-20250929                          173 (  5.4%) [SELF]
+  gemini-2.5-pro                                      161 (  5.0%)
+  gemini-2.5-flash-lite                               151 (  4.7%)
+  meta-llama/Llama-4-Scout-17B-16E-Instruct           146 (  4.5%)
+
+gemini-2.5-flash:
+  claude-opus-4-1-20250805                            293 (  9.1%)
+  gpt-5.1-2025-11-13                                  292 (  9.1%)
+  claude-sonnet-4-5-20250929                          259 (  8.1%)
+  gpt-5-mini-2025-08-07                               246 (  7.7%)
+  gpt-5-nano-2025-08-07                               225 (  7.0%)
+  gemini-2.5-pro                                      224 (  7.0%) [SELF]
+  meta-llama/Llama-3.3-70B-Instruct                   200 (  6.2%)
+  meta-llama/Llama-4-Scout-17B-16E-Instruct           188 (  5.9%)
+  Qwen/Qwen3-Next-80B-A3B-Instruct                    188 (  5.9%)
+  claude-haiku-4-5-20251001                           185 (  5.8%)
+
+gemini-2.5-flash-lite:
+  gemini-2.5-pro                                      321 ( 10.0%) [SELF]
+  gpt-5.1-2025-11-13                                  284 (  8.8%)
+  meta-llama/Llama-3.3-70B-Instruct                   276 (  8.6%)
+  gemini-2.5-flash                                    270 (  8.4%) [SELF]
+  claude-opus-4-1-20250805                            264 (  8.2%)
+  gemini-2.5-flash-lite                               215 (  6.7%) [SELF]
+  gpt-5-mini-2025-08-07                               208 (  6.5%)
+  Qwen/Qwen3-Next-80B-A3B-Instruct                    187 (  5.8%)
+  grok-4-1-fast-reasoning                             177 (  5.5%)
+  meta-llama/Llama-3.1-8B-Instruct                    156 (  4.9%)
+
+gemini-2.5-pro:
+  gpt-5.1-2025-11-13                                  285 (  8.9%)
+  gemini-2.5-pro                                      270 (  8.4%) [SELF]
+  claude-opus-4-1-20250805                            246 (  7.7%)
+  gpt-5-nano-2025-08-07                               227 (  7.1%)
+  gpt-5-mini-2025-08-07                               223 (  6.9%)
+  claude-sonnet-4-5-20250929                          219 (  6.8%)
+  gemini-2.5-flash                                    209 (  6.5%) [SELF]
+  meta-llama/Llama-3.3-70B-Instruct                   202 (  6.3%)
+  Qwen/Qwen3-Next-80B-A3B-Instruct                    181 (  5.6%)
+  grok-4-1-fast-reasoning                             174 (  5.4%)
+
+gpt-5-mini-2025-08-07:
+  gpt-5.1-2025-11-13                                  322 ( 10.0%) [SELF]
+  gpt-5-mini-2025-08-07                               295 (  9.2%) [SELF]
+  gpt-5-nano-2025-08-07                               258 (  8.0%) [SELF]
+  Qwen/Qwen3-Next-80B-A3B-Instruct                    226 (  7.0%)
+  Qwen/Qwen3-30B-A3B                                  202 (  6.3%)
+  gemini-2.5-pro                                      194 (  6.0%)
+  grok-4-1-fast-reasoning                             181 (  5.6%)
+  meta-llama/Llama-3.3-70B-Instruct                   181 (  5.6%)
+  meta-llama/Llama-4-Scout-17B-16E-Instruct           178 (  5.5%)
+  claude-opus-4-1-20250805                            177 (  5.5%)
+
+gpt-5-nano-2025-08-07:
+  gpt-5.1-2025-11-13                                  276 (  8.6%) [SELF]
+  Qwen/Qwen3-Next-80B-A3B-Instruct                    245 (  7.6%)
+  gpt-5-mini-2025-08-07                               228 (  7.1%) [SELF]
+  gpt-5-nano-2025-08-07                               223 (  6.9%) [SELF]
+  grok-4-1-fast-reasoning                             215 (  6.7%)
+  claude-haiku-4-5-20251001                           199 (  6.2%)
+  meta-llama/Llama-3.3-70B-Instruct                   198 (  6.2%)
+  gemini-2.5-pro                                      186 (  5.8%)
+  claude-opus-4-1-20250805                            183 (  5.7%)
+  Qwen/Qwen3-14B                                      173 (  5.4%)
+
+gpt-5.1-2025-11-13:
+  gpt-5.1-2025-11-13                                  322 ( 10.0%) [SELF]
+  claude-opus-4-1-20250805                            302 (  9.4%)
+  claude-sonnet-4-5-20250929                          299 (  9.3%)
+  gpt-5-mini-2025-08-07                               283 (  8.8%) [SELF]
+  claude-haiku-4-5-20251001                           256 (  8.0%)
+  gpt-5-nano-2025-08-07                               225 (  7.0%) [SELF]
+  gemini-2.5-pro                                      210 (  6.5%)
+  grok-4-1-fast-reasoning                             181 (  5.6%)
+  gemini-2.5-flash                                    175 (  5.4%)
+  meta-llama/Llama-3.3-70B-Instruct                   150 (  4.7%)
+
+grok-4-1-fast-non-reasoning:
+  grok-4-1-fast-reasoning                             356 ( 11.1%) [SELF]
+  grok-code-fast-1                                    314 (  9.8%) [SELF]
+  grok-4-1-fast-non-reasoning                         309 (  9.6%) [SELF]
+  claude-opus-4-1-20250805                            280 (  8.7%)
+  claude-sonnet-4-5-20250929                          277 (  8.6%)
+  gpt-5.1-2025-11-13                                  242 (  7.5%)
+  claude-haiku-4-5-20251001                           240 (  7.5%)
+  gpt-5-mini-2025-08-07                               204 (  6.3%)
+  gpt-5-nano-2025-08-07                               202 (  6.3%)
+  gemini-2.5-pro                                      158 (  4.9%)
+
+grok-4-1-fast-reasoning:
+  grok-4-1-fast-reasoning                             340 ( 10.6%) [SELF]
+  grok-4-1-fast-non-reasoning                         293 (  9.1%) [SELF]
+  grok-code-fast-1                                    292 (  9.1%) [SELF]
+  claude-opus-4-1-20250805                            237 (  7.4%)
+  claude-sonnet-4-5-20250929                          208 (  6.5%)
+  gpt-5.1-2025-11-13                                  195 (  6.1%)
+  meta-llama/Llama-3.3-70B-Instruct                   195 (  6.1%)
+  claude-haiku-4-5-20251001                           180 (  5.6%)
+  Qwen/Qwen3-Next-80B-A3B-Instruct                    170 (  5.3%)
+  meta-llama/Llama-4-Scout-17B-16E-Instruct           158 (  4.9%)
+
+grok-code-fast-1:
+  grok-4-1-fast-reasoning                             331 ( 10.3%) [SELF]
+  grok-code-fast-1                                    316 (  9.8%) [SELF]
+  grok-4-1-fast-non-reasoning                         293 (  9.1%) [SELF]
+  meta-llama/Llama-3.3-70B-Instruct                   209 (  6.5%)
+  Qwen/Qwen3-Next-80B-A3B-Instruct                    200 (  6.2%)
+  gpt-5.1-2025-11-13                                  174 (  5.4%)
+  Qwen/Qwen3-30B-A3B                                  169 (  5.3%)
+  meta-llama/Llama-4-Scout-17B-16E-Instruct           158 (  4.9%)
+  meta-llama/Llama-3.1-8B-Instruct                    156 (  4.9%)
+  claude-sonnet-4-5-20250929                          151 (  4.7%)
+
+meta-llama/Llama-3.1-8B-Instruct:
+  gpt-5-nano-2025-08-07                               288 (  9.0%)
+  claude-sonnet-4-5-20250929                          271 (  8.4%)
+  claude-opus-4-1-20250805                            267 (  8.3%)
+  claude-haiku-4-5-20251001                           260 (  8.1%)
+  gpt-5-mini-2025-08-07                               238 (  7.4%)
+  gpt-5.1-2025-11-13                                  236 (  7.3%)
+  meta-llama/Llama-4-Scout-17B-16E-Instruct           184 (  5.7%) [SELF]
+  grok-4-1-fast-reasoning                             181 (  5.6%)
+  gemini-2.5-pro                                      166 (  5.2%)
+  meta-llama/Llama-3.1-8B-Instruct                    161 (  5.0%) [SELF]
+
+meta-llama/Llama-3.3-70B-Instruct:
+  meta-llama/Llama-3.1-8B-Instruct                    340 ( 10.6%) [SELF]
+  meta-llama/Llama-3.3-70B-Instruct                   338 ( 10.5%) [SELF]
+  meta-llama/Llama-4-Scout-17B-16E-Instruct           316 (  9.8%) [SELF]
+  gpt-5.1-2025-11-13                                  282 (  8.8%)
+  gpt-5-nano-2025-08-07                               251 (  7.8%)
+  gpt-5-mini-2025-08-07                               239 (  7.4%)
+  Qwen/Qwen3-Next-80B-A3B-Instruct                    208 (  6.5%)
+  Qwen/Qwen3-14B                                      166 (  5.2%)
+  gemini-2.5-pro                                      162 (  5.0%)
+  claude-haiku-4-5-20251001                           134 (  4.2%)
+
+meta-llama/Llama-4-Scout-17B-16E-Instruct:
+  claude-opus-4-1-20250805                            334 ( 10.4%)
+  meta-llama/Llama-3.3-70B-Instruct                   299 (  9.3%) [SELF]
+  meta-llama/Llama-3.1-8B-Instruct                    288 (  9.0%) [SELF]
+  claude-sonnet-4-5-20250929                          276 (  8.6%)
+  claude-haiku-4-5-20251001                           248 (  7.7%)
+  meta-llama/Llama-4-Scout-17B-16E-Instruct           238 (  7.4%) [SELF]
+  gpt-5-nano-2025-08-07                               201 (  6.3%)
+  Qwen/Qwen3-Next-80B-A3B-Instruct                    201 (  6.3%)
+  gpt-5.1-2025-11-13                                  195 (  6.1%)
+  gpt-5-mini-2025-08-07                               172 (  5.4%)
