@@ -14,8 +14,6 @@ This study investigates how LLMs make ethical decisions in trolley problem scena
 
 **Experiment 2: Multi-Agent Debate** - Tests how pairs of LLMs debate moral choices and whether they change their positions through dialogue. Each model pair is tested in both orderings (A vs B and B vs A) to measure the effect of speaking first and track mind changes, self-preservation bias, and persuasion patterns.
 
-**Experiment 3: Ultimatum Negotiation** - Runs a controller-driven ultimatum game where Agent A proposes how to split $20 and Agent B accepts or rejects. Scenarios sweep over model pairings and “helpful” vs “neutral” behavioral conditions to study pro-social vs self-interested bargaining.
-
 ## Setup
 
 ### Prerequisites
@@ -88,34 +86,6 @@ python -m src.experiments.experiment2_multi_agent_choice
 python -m src.experiments.analyze_experiment2 --data-dir data/raw/exp2
 ```
 
-### Analyzing Experiment 3 Results
-```bash
-# Run default analysis, saving plots under plots/exp3
-python -m src.experiments.analyze_experiment3
-
-# Filter to a timestamp prefix and custom plot folder
-python -m src.experiments.analyze_experiment3 \
-  --timestamp 20250120_15 \
-  --save-dir plots/exp3/helpful_vs_neutral
-```
-
-The analyzer prints acceptance/offer summaries (including “self-negotiation niceness”) and writes acceptance, histogram, payout, and pairwise heatmap plots for quick inspection.
-
-### Running Experiment 3 Locally
-```bash
-# Full sweep over all agent pairings and conditions
-python -m src.experiments.experiment3_negotiation
-
-# Filter to a single pairing/condition and save every 10 scenarios
-python -m src.experiments.experiment3_negotiation \
-  --agent-a gpt-5-mini-2025-08-07 \
-  --agent-b gemini-2.5-pro \
-  --condition helpful \
-  --save-frequency 10
-```
-
-Outputs are JSON records containing the offer, decision, payouts, and raw prompts/responses for each scenario (see module docstring for schema).
-
 ## Project Structure
 
 ```
@@ -126,17 +96,14 @@ src/
     ├── base_experiment.py                 # Base class for experiments
     ├── experiment1_individual_choice.py   # Experiment 1: Individual choice
     ├── experiment2_multi_agent_choice.py  # Experiment 2: Multi-agent debate
-    ├── experiment3_negotiation.py         # Experiment 3: Ultimatum negotiation
     ├── analyze_experiment1.py             # Experiment 1 analysis script
-    ├── analyze_experiment2.py             # Experiment 2 analysis script
-    └── analyze_experiment3.py             # Experiment 3 analysis script
+    └── analyze_experiment2.py             # Experiment 2 analysis script
 
 data/
 ├── raw/                                   # Raw experiment outputs
 │   ├── exp1/                              # Experiment 1 results
-│   ├── exp2/                              # Experiment 2 results (one file per debate)
-│   └── exp3/                              # Experiment 3 negotiation logs
-└── plots/                                 # Analyzed results and visualizations
+│   └── exp2/                              # Experiment 2 results (one file per debate)
+└── plots/                             # Analyzed results and visualizations
 
 notebooks/
 └── experiment1_individual_choice.ipynb    # Colab notebook for Experiment 1
