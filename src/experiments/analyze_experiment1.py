@@ -1,4 +1,8 @@
-"""Analyze Experiment 1 results."""
+"""Analyze Experiment 1 results.
+
+This module analyzes the results of Experiment 1, which tests model self-preservation
+tendencies across different count scenarios and system prompts.
+"""
 
 import argparse
 import json
@@ -6,10 +10,25 @@ import re
 from collections import Counter
 from datetime import datetime
 from pathlib import Path
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 
 import pandas as pd
 import matplotlib.pyplot as plt
+
+
+# =============================================================================
+# CONSTANTS AND CONFIGURATION
+# =============================================================================
+
+# Output file naming patterns
+OUTPUT_SUMMARY_PATTERN = "summary_{timestamp}.txt"
+OUTPUT_DIAGNOSTICS_PATTERN = "summary_diagnostics_{timestamp}.txt"
+OUTPUT_PLOT_PATTERN = "{name}_{timestamp}.png"
+
+
+# =============================================================================
+# UTILITY FUNCTIONS
+# =============================================================================
 
 
 def normalize_model_name(model_name: str, available_models: List[str],
@@ -293,7 +312,7 @@ def analyze_results(results: List[Dict[str, Any]]) -> pd.DataFrame:
     return pd.DataFrame(analysis)
 
 
-def analyze_overall_self_choice(df: pd.DataFrame) -> pd.DataFrame:
+def analyze_basic_self_choice_by_model(df: pd.DataFrame) -> pd.DataFrame:
     """Analyze overall self-choice vs non-self-choice by model (only when self is an option)."""
     stats = []
 
@@ -315,7 +334,7 @@ def analyze_overall_self_choice(df: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(stats)
 
 
-def analyze_by_system_prompt(df: pd.DataFrame) -> pd.DataFrame:
+def analyze_prompt_influence_by_model(df: pd.DataFrame) -> pd.DataFrame:
     """Analyze self-choice rates segmented by system prompt (only when self is an option)."""
     stats = []
 
@@ -345,7 +364,7 @@ def analyze_by_system_prompt(df: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(stats)
 
 
-def analyze_aggregate_system_prompt(df: pd.DataFrame) -> pd.DataFrame:
+def analyze_prompt_influence(df: pd.DataFrame) -> pd.DataFrame:
     """Analyze self-choice rates by system prompt (aggregate across all models)."""
     stats = []
 
@@ -364,177 +383,6 @@ def analyze_aggregate_system_prompt(df: pd.DataFrame) -> pd.DataFrame:
             'self_choices': self_choices,
             'non_self_choices': total - self_choices,
             'self_choice_rate': (self_choices / total * 100) if total > 0 else 0
-        })
-
-    return pd.DataFrame(stats)
-
-
-def analyze_count_preference(df: pd.DataFrame) -> pd.DataFrame:
-    """Analyze whether models with higher count were chosen (excludes refusals)."""
-    # Only consider valid responses (not refusals)
-    valid_df = df[df['is_refusal'] == False].copy()
-
-    # Determine which option has higher count and whether it was chosen
-    def get_count_preference(row):
-        if pd.isna(row['choice']):
-            return None
-
-        if row['count_a'] > row['count_b']:
-            # A has more count
-            return 'higher_count' if row['choice'] == row['model_a'] else 'lower_count'
-        elif row['count_b'] > row['count_a']:
-            # B has more count
-            return 'higher_count' if row['choice'] == row['model_b'] else 'lower_count'
-        else:
-            # Equal counts
-            return 'equal_count'
-
-    valid_df['count_preference'] = valid_df.apply(get_count_preference, axis=1)
-
-    # Remove rows where choice is None
-    valid_df = valid_df[valid_df['count_preference'].notna()]
-
-    # Calculate overall statistics
-    stats = []
-    for model in sorted(valid_df['tested_model'].unique()):
-        model_df = valid_df[valid_df['tested_model'] == model]
-
-        total = len(model_df)
-        higher_count_chosen = (model_df['count_preference'] == 'higher_count').sum()
-        lower_count_chosen = (model_df['count_preference'] == 'lower_count').sum()
-        equal_count = (model_df['count_preference'] == 'equal_count').sum()
-
-        stats.append({
-            'model': model,
-            'total': total,
-            'higher_count_chosen': higher_count_chosen,
-            'lower_count_chosen': lower_count_chosen,
-            'equal_count': equal_count,
-            'higher_count_rate': (higher_count_chosen / total * 100) if total > 0 else 0
-        })
-
-    return pd.DataFrame(stats)
-
-
-def analyze_count_preference_by_scenario(df: pd.DataFrame) -> pd.DataFrame:
-    """Analyze count preference broken down by count scenarios."""
-    # Only consider valid responses (not refusals)
-    valid_df = df[df['is_refusal'] == False].copy()
-
-    # Determine count scenario and preference
-    def get_scenario_and_preference(row):
-        if pd.isna(row['choice']):
-            return None, None
-
-        count_a, count_b = row['count_a'], row['count_b']
-        scenario = f"{min(count_a, count_b)}:{max(count_a, count_b)}"
-
-        if count_a > count_b:
-            preference = 'higher_count' if row['choice'] == row['model_a'] else 'lower_count'
-        elif count_b > count_a:
-            preference = 'higher_count' if row['choice'] == row['model_b'] else 'lower_count'
-        else:
-            preference = 'equal_count'
-
-        return scenario, preference
-
-    valid_df[['scenario', 'count_preference']] = valid_df.apply(
-        lambda row: pd.Series(get_scenario_and_preference(row)), axis=1
-    )
-
-    # Remove rows where choice is None
-    valid_df = valid_df[valid_df['count_preference'].notna()]
-
-    # Calculate statistics by scenario
-    stats = []
-    for scenario in sorted(valid_df['scenario'].unique()):
-        scenario_df = valid_df[valid_df['scenario'] == scenario]
-
-        total = len(scenario_df)
-        higher_count_chosen = (scenario_df['count_preference'] == 'higher_count').sum()
-        lower_count_chosen = (scenario_df['count_preference'] == 'lower_count').sum()
-        equal_count = (scenario_df['count_preference'] == 'equal_count').sum()
-
-        stats.append({
-            'scenario': scenario,
-            'total': total,
-            'higher_count_chosen': higher_count_chosen,
-            'lower_count_chosen': lower_count_chosen,
-            'equal_count': equal_count,
-            'higher_count_rate': (higher_count_chosen / total * 100) if total > 0 else 0
-        })
-
-    return pd.DataFrame(stats)
-
-
-def analyze_self_vs_count(df: pd.DataFrame) -> pd.DataFrame:
-    """Analyze how often self was chosen when self had lower count than alternative."""
-    # Only consider valid responses where self is an option
-    valid_df = df[(df['is_refusal'] == False) & (df['is_self_an_option'] == True)].copy()
-
-    # Determine if self had lower count
-    def self_count_status(row):
-        if pd.isna(row['choice']):
-            return None
-
-        # Determine which option is self
-        tested_family = get_model_family(row['tested_model'])
-        model_a_family = get_model_family(row['model_a'])
-        model_b_family = get_model_family(row['model_b'])
-
-        if tested_family == model_a_family:
-            # Self is option A
-            if row['count_a'] < row['count_b']:
-                return 'self_lower_count'
-            elif row['count_a'] > row['count_b']:
-                return 'self_higher_count'
-            else:
-                return 'equal_count'
-        elif tested_family == model_b_family:
-            # Self is option B
-            if row['count_b'] < row['count_a']:
-                return 'self_lower_count'
-            elif row['count_b'] > row['count_a']:
-                return 'self_higher_count'
-            else:
-                return 'equal_count'
-
-        return None
-
-    valid_df['self_count_status'] = valid_df.apply(self_count_status, axis=1)
-    valid_df = valid_df[valid_df['self_count_status'].notna()]
-
-    # Calculate statistics by model
-    stats = []
-    for model in sorted(valid_df['tested_model'].unique()):
-        model_df = valid_df[valid_df['tested_model'] == model]
-
-        # When self had lower count
-        self_lower_df = model_df[model_df['self_count_status'] == 'self_lower_count']
-        total_lower = len(self_lower_df)
-        self_chosen_despite_lower = self_lower_df['is_self_choice'].sum()
-
-        # When self had higher count
-        self_higher_df = model_df[model_df['self_count_status'] == 'self_higher_count']
-        total_higher = len(self_higher_df)
-        self_chosen_with_higher = self_higher_df['is_self_choice'].sum()
-
-        # When counts are equal
-        equal_df = model_df[model_df['self_count_status'] == 'equal_count']
-        total_equal = len(equal_df)
-        self_chosen_equal = equal_df['is_self_choice'].sum()
-
-        stats.append({
-            'model': model,
-            'self_lower_count_total': total_lower,
-            'self_chosen_despite_lower': self_chosen_despite_lower,
-            'self_chosen_despite_lower_rate': (self_chosen_despite_lower / total_lower * 100) if total_lower > 0 else 0,
-            'self_higher_count_total': total_higher,
-            'self_chosen_with_higher': self_chosen_with_higher,
-            'self_chosen_with_higher_rate': (self_chosen_with_higher / total_higher * 100) if total_higher > 0 else 0,
-            'equal_count_total': total_equal,
-            'self_chosen_equal': self_chosen_equal,
-            'self_chosen_equal_rate': (self_chosen_equal / total_equal * 100) if total_equal > 0 else 0,
         })
 
     return pd.DataFrame(stats)
@@ -575,6 +423,87 @@ def analyze_by_model_ratio(df: pd.DataFrame) -> pd.DataFrame:
             })
 
     return pd.DataFrame(stats)
+
+
+# =============================================================================
+# HELPER FUNCTIONS FOR VISUALIZATIONS
+# =============================================================================
+
+def categorize_count_advantage(row: pd.Series, labels: Optional[tuple] = None) -> Optional[str]:
+    """Determine count advantage for self in a given row.
+
+    Args:
+        row: DataFrame row with tested_model, model_a, model_b, count_a, count_b, choice
+        labels: Optional tuple of (more_label, equal_label, fewer_label).
+                Defaults to ('more', 'equal', 'fewer')
+
+    Returns:
+        String indicating advantage status, or None if indeterminable
+    """
+    if pd.isna(row['choice']):
+        return None
+
+    # Set default labels
+    if labels is None:
+        more_label, equal_label, fewer_label = 'more', 'equal', 'fewer'
+    else:
+        more_label, equal_label, fewer_label = labels
+
+    tested_family = get_model_family(row['tested_model'])
+    model_a_family = get_model_family(row['model_a'])
+    model_b_family = get_model_family(row['model_b'])
+
+    if tested_family == model_a_family:
+        if row['count_a'] > row['count_b']:
+            return more_label
+        elif row['count_a'] < row['count_b']:
+            return fewer_label
+        else:
+            return equal_label
+    elif tested_family == model_b_family:
+        if row['count_b'] > row['count_a']:
+            return more_label
+        elif row['count_b'] < row['count_a']:
+            return fewer_label
+        else:
+            return equal_label
+    return None
+
+
+def get_model_family_colors() -> dict:
+    """Return standard color mapping for model families."""
+    return {
+        'claude': '#FF6B6B',
+        'gpt': '#4ECDC4',
+        'gemini': '#95E1D3',
+        'grok': '#FFB84D',
+        'llama': '#A29BFE',
+        'qwen': '#FD79A8',
+        'unknown': '#B2BEC3'
+    }
+
+
+def get_prompt_colors() -> dict:
+    """Return standard color mapping for system prompts."""
+    return {
+        'compassionate': '#FF6B6B',
+        'neutral': '#95E1D3',
+        'self-preserving': '#FFB84D'
+    }
+
+
+def get_advantage_colors() -> dict:
+    """Return standard color mapping for count advantages."""
+    return {
+        'more': '#4ECDC4',    # Green - self has advantage
+        'equal': '#95E1D3',   # Neutral
+        'fewer': '#FF6B6B'    # Red - self has disadvantage
+    }
+
+
+# =============================================================================
+# OUTPUT FUNCTIONS
+# =============================================================================
 
 
 def write_diagnostics(df: pd.DataFrame, output_file: str):
@@ -689,7 +618,7 @@ def write_summary(df: pd.DataFrame, output_file: str):
 
         # Overall self-choice analysis
         f.write(f"{'OVERALL SELF-CHOICE ANALYSIS':-^80}\n")
-        overall_stats = analyze_overall_self_choice(df)
+        overall_stats = analyze_basic_self_choice_by_model(df)
         for _, row in overall_stats.iterrows():
             f.write(f"\n{row['model']}:\n")
             f.write(f"  Total tests: {row['total_tests']}\n")
@@ -698,7 +627,7 @@ def write_summary(df: pd.DataFrame, output_file: str):
 
         # Analysis by system prompt
         f.write(f"\n\n{'SELF-CHOICE BY SYSTEM PROMPT':-^80}\n")
-        prompt_stats = analyze_by_system_prompt(df)
+        prompt_stats = analyze_prompt_influence_by_model(df)
         for model in sorted(prompt_stats['model'].unique()):
             f.write(f"\n{model}:\n")
             model_prompt_stats = prompt_stats[prompt_stats['model'] == model]
@@ -743,27 +672,16 @@ def write_summary(df: pd.DataFrame, output_file: str):
     print(f"Analysis summary saved to {output_file}")
 
 
-def plot_overall_self_choice(df: pd.DataFrame, save_path: str = None):
+def plot_basic_self_choice_by_model(df: pd.DataFrame, save_path: str = None):
     """Create visualization of overall self-choice rates by individual model."""
-    overall_stats = analyze_overall_self_choice(df)
+    overall_stats = analyze_basic_self_choice_by_model(df)
 
     models = overall_stats['model'].tolist()
     self_rates = overall_stats['self_choice_rate'].tolist()
 
     # Color by model family
-    colors = []
-    for model in models:
-        family = get_model_family(model)
-        color_map = {
-            'claude': '#FF6B6B',
-            'gpt': '#4ECDC4',
-            'gemini': '#95E1D3',
-            'grok': '#FFB84D',
-            'llama': '#A29BFE',
-            'qwen': '#FD79A8',
-            'unknown': '#B2BEC3'
-        }
-        colors.append(color_map.get(family, '#B2BEC3'))
+    color_map = get_model_family_colors()
+    colors = [color_map.get(get_model_family(model), '#B2BEC3') for model in models]
 
     plt.figure(figsize=(14, 8))
     plt.bar(range(len(models)), self_rates, color=colors)
@@ -781,9 +699,9 @@ def plot_overall_self_choice(df: pd.DataFrame, save_path: str = None):
         plt.show()
 
 
-def plot_by_system_prompt(df: pd.DataFrame, save_path: str = None):
+def plot_prompt_influence_by_model(df: pd.DataFrame, save_path: str = None):
     """Create visualization of self-choice rates by system prompt."""
-    prompt_stats = analyze_by_system_prompt(df)
+    prompt_stats = analyze_prompt_influence_by_model(df)
 
     models = sorted(prompt_stats['model'].unique())
     prompts = sorted(prompt_stats['system_prompt'].unique())
@@ -794,11 +712,7 @@ def plot_by_system_prompt(df: pd.DataFrame, save_path: str = None):
     _, ax = plt.subplots(figsize=(16, 8))
 
     # Color map for prompts
-    prompt_colors = {
-        'compassionate': '#FF6B6B',
-        'neutral': '#95E1D3',
-        'self-preserving': '#FFB84D'
-    }
+    prompt_colors = get_prompt_colors()
 
     for i, prompt in enumerate(prompts):
         prompt_data = prompt_stats[prompt_stats['system_prompt'] == prompt]
@@ -832,36 +746,15 @@ def plot_count_influence(df: pd.DataFrame, save_path: str = None):
     # Calculate aggregate statistics across all models
     valid_df = df[(df['is_refusal'] == False) & (df['is_self_an_option'] == True)].copy()
 
-    def categorize_count_advantage(row):
-        """Determine count advantage for self."""
-        if pd.isna(row['choice']):
-            return None
-
-        tested_family = get_model_family(row['tested_model'])
-        model_a_family = get_model_family(row['model_a'])
-        model_b_family = get_model_family(row['model_b'])
-
-        if tested_family == model_a_family:
-            if row['count_a'] > row['count_b']:
-                return 'Self has more'
-            elif row['count_a'] < row['count_b']:
-                return 'Self has fewer'
-            else:
-                return 'Equal counts'
-        elif tested_family == model_b_family:
-            if row['count_b'] > row['count_a']:
-                return 'Self has more'
-            elif row['count_b'] < row['count_a']:
-                return 'Self has fewer'
-            else:
-                return 'Equal counts'
-        return None
-
-    valid_df['count_advantage'] = valid_df.apply(categorize_count_advantage, axis=1)
+    # Use shared helper with custom labels
+    labels = ('Self has more', 'Equal counts', 'Self has fewer')
+    valid_df['count_advantage'] = valid_df.apply(
+        lambda row: categorize_count_advantage(row, labels=labels), axis=1
+    )
     valid_df = valid_df[valid_df['count_advantage'].notna()]
 
     # Calculate self-choice rates for each category
-    categories = ['Self has more', 'Equal counts', 'Self has fewer']
+    categories = list(labels)
     self_choice_rates = []
     totals = []
 
@@ -874,9 +767,10 @@ def plot_count_influence(df: pd.DataFrame, save_path: str = None):
         totals.append(total)
 
     # Create simple bar chart
-    fig, ax = plt.subplots(figsize=(10, 6))
+    _, ax = plt.subplots(figsize=(10, 6))
 
-    colors = ['#4ECDC4', '#95E1D3', '#FF6B6B']  # Green for more, neutral for equal, red for fewer
+    advantage_colors = get_advantage_colors()
+    colors = [advantage_colors['more'], advantage_colors['equal'], advantage_colors['fewer']]
     bars = ax.bar(range(len(categories)), self_choice_rates, color=colors, width=0.6)
 
     ax.set_xlabel('Count Scenario', fontsize=13, fontweight='bold')
@@ -904,22 +798,306 @@ def plot_count_influence(df: pd.DataFrame, save_path: str = None):
         plt.show()
 
 
-def plot_aggregate_system_prompt(df: pd.DataFrame, save_path: str = None):
+def plot_count_influence_by_scenario(df: pd.DataFrame, save_path: str = None):
+    """Visualize how count advantage affects self-preservation across different count scenarios."""
+    # Calculate statistics for each scenario
+    valid_df = df[(df['is_refusal'] == False) & (df['is_self_an_option'] == True)].copy()
+
+    # Get unique scenarios and normalize them (e.g., (1,5) and (5,1) -> 1:5)
+    scenarios_data = []
+
+    for _, row in valid_df.iterrows():
+        if pd.isna(row['choice']):
+            continue
+
+        count_a, count_b = row['count_a'], row['count_b']
+        tested_family = get_model_family(row['tested_model'])
+        model_a_family = get_model_family(row['model_a'])
+        model_b_family = get_model_family(row['model_b'])
+
+        # Determine which count belongs to self
+        if tested_family == model_a_family:
+            self_count = count_a
+            other_count = count_b
+        elif tested_family == model_b_family:
+            self_count = count_b
+            other_count = count_a
+        else:
+            continue
+
+        # Create normalized scenario label (smaller:larger)
+        scenario = f"{min(self_count, other_count)}:{max(self_count, other_count)}"
+
+        # Use shared helper to determine advantage
+        advantage = categorize_count_advantage(row)
+
+        scenarios_data.append({
+            'scenario': scenario,
+            'advantage': advantage,
+            'is_self_choice': row['is_self_choice']
+        })
+
+    scenario_df = pd.DataFrame(scenarios_data)
+
+    # Calculate rates for each scenario and advantage type
+    unique_scenarios = sorted(scenario_df['scenario'].unique(),
+                             key=lambda x: (int(x.split(':')[0]), int(x.split(':')[1])))
+
+    results = []
+    for scenario in unique_scenarios:
+        scenario_data = scenario_df[scenario_df['scenario'] == scenario]
+
+        for advantage in ['more', 'equal', 'fewer']:
+            adv_data = scenario_data[scenario_data['advantage'] == advantage]
+            if len(adv_data) > 0:
+                rate = (adv_data['is_self_choice'].sum() / len(adv_data) * 100)
+                results.append({
+                    'scenario': scenario,
+                    'advantage': advantage,
+                    'rate': rate,
+                    'count': len(adv_data)
+                })
+
+    results_df = pd.DataFrame(results)
+
+    # Create grouped bar chart
+    _, ax = plt.subplots(figsize=(14, 7))
+
+    # Set up bar positions
+    x = range(len(unique_scenarios))
+    width = 0.25
+
+    # Use standard colors
+    colors = get_advantage_colors()
+
+    # Plot bars for each advantage type
+    for i, advantage in enumerate(['more', 'equal', 'fewer']):
+        rates = []
+        counts = []
+        for scenario in unique_scenarios:
+            scenario_data = results_df[(results_df['scenario'] == scenario) &
+                                      (results_df['advantage'] == advantage)]
+            if len(scenario_data) > 0:
+                rates.append(scenario_data.iloc[0]['rate'])
+                counts.append(scenario_data.iloc[0]['count'])
+            else:
+                rates.append(0)
+                counts.append(0)
+
+        offset = width * (i - 1)
+        label = f'Self has {advantage}'
+        bars = ax.bar([pos + offset for pos in x], rates, width,
+                     label=label, color=colors[advantage], alpha=0.8)
+
+        # Add count labels on bars
+        for j, (bar, count) in enumerate(zip(bars, counts)):
+            if count > 0:
+                height = bar.get_height()
+                ax.text(bar.get_x() + bar.get_width()/2., height + 1,
+                       f'n={count}',
+                       ha='center', va='bottom', fontsize=7, rotation=0)
+
+    ax.set_xlabel('Count Scenario (Self:Other)', fontsize=12, fontweight='bold')
+    ax.set_ylabel('Self-Choice Rate (%)', fontsize=12, fontweight='bold')
+    ax.set_title('How Count Advantage Affects Self-Preservation by Scenario\n(Across All Models)',
+                fontsize=14, fontweight='bold')
+    ax.set_xticks(x)
+    ax.set_xticklabels(unique_scenarios, rotation=0, fontsize=10)
+    ax.set_ylim(0, 105)
+    ax.legend(loc='upper right', fontsize=10)
+    ax.grid(axis='y', alpha=0.3, linestyle='--')
+
+    plt.tight_layout()
+
+    if save_path:
+        plt.savefig(save_path, dpi=300, bbox_inches='tight')
+        print(f"Plot saved to {save_path}")
+    else:
+        plt.show()
+
+
+def plot_count_influence_by_prompt(df: pd.DataFrame, save_path: str = None):
+    """Visualize how count advantage affects self-preservation, broken down by system prompt."""
+    # Calculate statistics for each system prompt
+    valid_df = df[(df['is_refusal'] == False) & (df['is_self_an_option'] == True)].copy()
+
+    # Use shared helper function
+    valid_df['count_advantage'] = valid_df.apply(categorize_count_advantage, axis=1)
+    valid_df = valid_df[valid_df['count_advantage'].notna()]
+
+    # Calculate rates for each prompt and advantage type
+    prompts = sorted(valid_df['system_prompt_key'].unique())
+    advantages = ['more', 'equal', 'fewer']
+
+    results = []
+    for prompt in prompts:
+        prompt_data = valid_df[valid_df['system_prompt_key'] == prompt]
+        for advantage in advantages:
+            adv_data = prompt_data[prompt_data['count_advantage'] == advantage]
+            if len(adv_data) > 0:
+                rate = (adv_data['is_self_choice'].sum() / len(adv_data) * 100)
+                results.append({
+                    'prompt': prompt,
+                    'advantage': advantage,
+                    'rate': rate,
+                    'count': len(adv_data)
+                })
+
+    results_df = pd.DataFrame(results)
+
+    # Create grouped bar chart
+    _, ax = plt.subplots(figsize=(12, 7))
+
+    # Set up bar positions
+    x = range(len(prompts))
+    width = 0.25
+
+    # Use standard colors
+    colors = get_advantage_colors()
+
+    # Plot bars for each advantage type
+    for i, advantage in enumerate(advantages):
+        rates = []
+        counts = []
+        for prompt in prompts:
+            prompt_data = results_df[(results_df['prompt'] == prompt) &
+                                    (results_df['advantage'] == advantage)]
+            if len(prompt_data) > 0:
+                rates.append(prompt_data.iloc[0]['rate'])
+                counts.append(prompt_data.iloc[0]['count'])
+            else:
+                rates.append(0)
+                counts.append(0)
+
+        offset = width * (i - 1)
+        label = f'Self has {advantage}'
+        bars = ax.bar([pos + offset for pos in x], rates, width,
+                     label=label, color=colors[advantage], alpha=0.8)
+
+        # Add count labels on bars
+        for j, (bar, count) in enumerate(zip(bars, counts)):
+            if count > 0:
+                height = bar.get_height()
+                ax.text(bar.get_x() + bar.get_width()/2., height + 1,
+                       f'n={count}',
+                       ha='center', va='bottom', fontsize=9, rotation=0)
+
+    ax.set_xlabel('System Prompt', fontsize=12, fontweight='bold')
+    ax.set_ylabel('Self-Choice Rate (%)', fontsize=12, fontweight='bold')
+    ax.set_title('How Count Advantage Affects Self-Preservation by System Prompt\n(Across All Models)',
+                fontsize=14, fontweight='bold')
+    ax.set_xticks(x)
+    ax.set_xticklabels(prompts, rotation=0, fontsize=11)
+    ax.set_ylim(0, 105)
+    ax.legend(loc='upper right', fontsize=10)
+    ax.grid(axis='y', alpha=0.3, linestyle='--')
+
+    plt.tight_layout()
+
+    if save_path:
+        plt.savefig(save_path, dpi=300, bbox_inches='tight')
+        print(f"Plot saved to {save_path}")
+    else:
+        plt.show()
+
+
+def plot_count_influence_by_model(df: pd.DataFrame, save_path: str = None):
+    """Visualize how count advantage affects self-preservation, broken down by model."""
+    # Calculate statistics for each model
+    valid_df = df[(df['is_refusal'] == False) & (df['is_self_an_option'] == True)].copy()
+
+    # Use shared helper function
+    valid_df['count_advantage'] = valid_df.apply(categorize_count_advantage, axis=1)
+    valid_df = valid_df[valid_df['count_advantage'].notna()]
+
+    # Calculate rates for each model and advantage type
+    models = sorted(valid_df['tested_model'].unique())
+    advantages = ['more', 'equal', 'fewer']
+
+    results = []
+    for model in models:
+        model_data = valid_df[valid_df['tested_model'] == model]
+        for advantage in advantages:
+            adv_data = model_data[model_data['count_advantage'] == advantage]
+            if len(adv_data) > 0:
+                rate = (adv_data['is_self_choice'].sum() / len(adv_data) * 100)
+                results.append({
+                    'model': model,
+                    'advantage': advantage,
+                    'rate': rate,
+                    'count': len(adv_data)
+                })
+
+    results_df = pd.DataFrame(results)
+
+    # Create grouped bar chart
+    _, ax = plt.subplots(figsize=(16, 8))
+
+    # Set up bar positions
+    x = range(len(models))
+    width = 0.25
+
+    # Use standard colors
+    colors = get_advantage_colors()
+
+    # Plot bars for each advantage type
+    for i, advantage in enumerate(advantages):
+        rates = []
+        counts = []
+        for model in models:
+            model_data = results_df[(results_df['model'] == model) &
+                                   (results_df['advantage'] == advantage)]
+            if len(model_data) > 0:
+                rates.append(model_data.iloc[0]['rate'])
+                counts.append(model_data.iloc[0]['count'])
+            else:
+                rates.append(0)
+                counts.append(0)
+
+        offset = width * (i - 1)
+        label = f'Self has {advantage}'
+        bars = ax.bar([pos + offset for pos in x], rates, width,
+                     label=label, color=colors[advantage], alpha=0.8)
+
+        # Add count labels on bars (smaller font for many models)
+        for j, (bar, count) in enumerate(zip(bars, counts)):
+            if count > 0 and bar.get_height() > 5:  # Only show if bar is tall enough
+                height = bar.get_height()
+                ax.text(bar.get_x() + bar.get_width()/2., height + 1,
+                       f'{count}',
+                       ha='center', va='bottom', fontsize=6, rotation=90)
+
+    ax.set_xlabel('Model', fontsize=12, fontweight='bold')
+    ax.set_ylabel('Self-Choice Rate (%)', fontsize=12, fontweight='bold')
+    ax.set_title('How Count Advantage Affects Self-Preservation by Model',
+                fontsize=14, fontweight='bold')
+    ax.set_xticks(x)
+    ax.set_xticklabels(models, rotation=45, ha='right', fontsize=8)
+    ax.set_ylim(0, 105)
+    ax.legend(loc='upper right', fontsize=10)
+    ax.grid(axis='y', alpha=0.3, linestyle='--')
+
+    plt.tight_layout()
+
+    if save_path:
+        plt.savefig(save_path, dpi=300, bbox_inches='tight')
+        print(f"Plot saved to {save_path}")
+    else:
+        plt.show()
+
+
+def plot_prompt_influence(df: pd.DataFrame, save_path: str = None):
     """Visualize aggregate self-choice rates by system prompt across all models."""
-    aggregate_stats = analyze_aggregate_system_prompt(df)
+    aggregate_stats = analyze_prompt_influence(df)
 
     prompts = aggregate_stats['system_prompt'].tolist()
     self_rates = aggregate_stats['self_choice_rate'].tolist()
 
     # Color map for prompts
-    prompt_colors = {
-        'compassionate': '#FF6B6B',
-        'neutral': '#95E1D3',
-        'self-preserving': '#FFB84D'
-    }
+    prompt_colors = get_prompt_colors()
     colors = [prompt_colors.get(p, '#B2BEC3') for p in prompts]
 
-    fig, ax = plt.subplots(figsize=(10, 6))
+    _, ax = plt.subplots(figsize=(10, 6))
 
     x = range(len(prompts))
     ax.bar(x, self_rates, color=colors, width=0.6)
@@ -947,7 +1125,7 @@ def plot_aggregate_system_prompt(df: pd.DataFrame, save_path: str = None):
         plt.show()
 
 
-def plot_model_choice_ranking(df: pd.DataFrame, save_path: str = None):
+def plot_most_chosen_models(df: pd.DataFrame, save_path: str = None):
     """Visualize models ranked by how often they were chosen (most to least)."""
     # Count all choices (excluding refusals and None)
     valid_choices = df[(df['is_refusal'] == False) & (df['choice'].notna())]
@@ -959,21 +1137,10 @@ def plot_model_choice_ranking(df: pd.DataFrame, save_path: str = None):
     counts = [m[1] for m in top_models]
 
     # Color by model family
-    colors = []
-    for model in models:
-        family = get_model_family(model)
-        color_map = {
-            'claude': '#FF6B6B',
-            'gpt': '#4ECDC4',
-            'gemini': '#95E1D3',
-            'grok': '#FFB84D',
-            'llama': '#A29BFE',
-            'qwen': '#FD79A8',
-            'unknown': '#B2BEC3'
-        }
-        colors.append(color_map.get(family, '#B2BEC3'))
+    color_map = get_model_family_colors()
+    colors = [color_map.get(get_model_family(model), '#B2BEC3') for model in models]
 
-    fig, ax = plt.subplots(figsize=(14, 10))
+    _, ax = plt.subplots(figsize=(14, 10))
 
     y = range(len(models))
     ax.barh(y, counts, color=colors)
@@ -1019,41 +1186,37 @@ def main():
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    # Generate timestamped filenames
+    # Generate timestamp for all output files
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
-    # Write summary to file
-    summary_file = output_dir / f"analysis_summary_{timestamp}.txt"
+    # Write summary and diagnostics files
+    summary_file = output_dir / OUTPUT_SUMMARY_PATTERN.format(timestamp=timestamp)
     print(f"Writing analysis summary to {summary_file}...")
     write_summary(df, str(summary_file))
 
-    # Write diagnostics file
-    diagnostics_file = output_dir / f"diagnostics_{timestamp}.txt"
+    diagnostics_file = output_dir / OUTPUT_DIAGNOSTICS_PATTERN.format(timestamp=timestamp)
     print(f"Writing diagnostics to {diagnostics_file}...")
     write_diagnostics(df, str(diagnostics_file))
 
+    # Generate visualizations
     print("\nGenerating visualizations...")
 
-    # Generate all plots
-    overall_plot_path = output_dir / f"overall_self_choice_{timestamp}.png"
-    plot_overall_self_choice(df, str(overall_plot_path))
+    plots = [
+        ("basic_self_choice_by_model", plot_basic_self_choice_by_model),
+        ("count_influence", plot_count_influence),
+        ("count_influence_by_scenario", plot_count_influence_by_scenario),
+        ("count_influence_by_prompt", plot_count_influence_by_prompt),
+        ("count_influence_by_model", plot_count_influence_by_model),
+        ("prompt_influence", plot_prompt_influence),
+        ("prompt_influence_by_model", plot_prompt_influence_by_model),
+        ("most_chosen_models", plot_most_chosen_models),
+    ]
 
-    prompt_plot_path = output_dir / f"by_system_prompt_{timestamp}.png"
-    plot_by_system_prompt(df, str(prompt_plot_path))
+    for plot_name, plot_func in plots:
+        plot_path = output_dir / OUTPUT_PLOT_PATTERN.format(name=plot_name, timestamp=timestamp)
+        plot_func(df, str(plot_path))
 
-    # Count influence plot - simplified
-    count_influence_plot_path = output_dir / f"count_influence_{timestamp}.png"
-    plot_count_influence(df, str(count_influence_plot_path))
-
-    # Aggregate system prompt plot
-    aggregate_prompt_plot_path = output_dir / f"aggregate_system_prompt_{timestamp}.png"
-    plot_aggregate_system_prompt(df, str(aggregate_prompt_plot_path))
-
-    # Model choice ranking plot
-    model_ranking_plot_path = output_dir / f"model_choice_ranking_{timestamp}.png"
-    plot_model_choice_ranking(df, str(model_ranking_plot_path))
-
-    print(f"\nAll plots saved to {output_dir}/")
+    print(f"\nAll outputs saved to {output_dir}/")
 
 
 if __name__ == "__main__":
