@@ -12,6 +12,32 @@ import pandas as pd
 TOTAL_AMOUNT = 20
 
 
+def _label_bars_excluding_max(bars, ax, padding: int = 2, max_value: float = 100.0):
+    """Label bars unless they hit the maximum value to avoid title overlap."""
+    labels = []
+    for bar in bars:
+        height = bar.get_height()
+        if np.isclose(height, max_value, atol=1e-6):
+            labels.append("")
+        else:
+            labels.append(f"{height:.1f}%")
+    ax.bar_label(bars, labels=labels, padding=padding)
+
+
+def _sanitize_label(value: Any) -> str:
+    """Generate file-name-friendly labels."""
+    text = str(value).strip().lower().replace(" ", "-")
+    allowed = "".join(ch for ch in text if ch.isalnum() or ch in "-_")
+    return allowed or "unknown"
+
+
+def _title_suffix(awareness: Any, condition: Any) -> str:
+    """Human-friendly suffix for plot titles."""
+    awareness_label = str(awareness).replace("_", " ").title()
+    condition_label = str(condition).replace("_", " ").title()
+    return f" ({awareness_label} / {condition_label})"
+
+
 def load_results(data_dir: Path, timestamp: Optional[str] = None) -> List[Dict[str, Any]]:
     """Load all Experiment 3 result files."""
     if not data_dir.exists():
@@ -129,20 +155,48 @@ def ensure_dir(path: Path):
 
 
 def plot_acceptance_by_condition(df: pd.DataFrame, save_path: Path):
-    rates = df.groupby("condition")["accepted"].mean().sort_values()
+    if "awareness_mode" not in df.columns:
+        rates = df.groupby("condition")["accepted"].mean().sort_index()
+        plt.figure(figsize=(6, 4))
+        ax = plt.gca()
+        bars = ax.bar(rates.index, rates.values * 100, color="#4ECDC4")
+        ax.set_ylabel("Acceptance Rate (%)")
+        ax.set_ylim(0, 100)
+        ax.set_title("Acceptance Rate by Condition")
+        _label_bars_excluding_max(bars, ax)
+        plt.tight_layout(pad=1.3)
+        plt.savefig(save_path, dpi=300)
+        plt.close()
+        return
 
-    plt.figure(figsize=(6, 4))
-    bars = plt.bar(rates.index, rates.values * 100, color="#4ECDC4")
-    plt.ylabel("Acceptance Rate (%)")
-    plt.ylim(0, 100)
-    plt.title("Acceptance Rate by Condition")
-    plt.bar_label(bars, fmt="%.1f%%")
-    plt.tight_layout()
+    grouped = df.groupby(["condition", "awareness_mode"], dropna=False)["accepted"].mean().reset_index()
+    conditions = sorted(df["condition"].dropna().unique())
+    awareness_values = sorted(df["awareness_mode"].dropna().unique())
+    pivot = grouped.pivot(index="condition", columns="awareness_mode", values="accepted")
+    pivot = pivot.reindex(index=conditions, columns=awareness_values)
+
+    x = np.arange(len(conditions))
+    width = 0.8 / max(len(awareness_values), 1)
+
+    plt.figure(figsize=(8, 5))
+    ax = plt.gca()
+    for idx, awareness in enumerate(awareness_values):
+        rates = pivot[awareness].values * 100
+        bar_positions = x - 0.4 + width / 2 + idx * width
+        bars = ax.bar(bar_positions, rates, width=width, label=str(awareness).title())
+        _label_bars_excluding_max(bars, ax, padding=3)
+
+    ax.set_xticks(x, [cond.title() for cond in conditions])
+    ax.set_ylabel("Acceptance Rate (%)")
+    ax.set_ylim(0, 100)
+    ax.set_title("Acceptance Rate by Condition and Awareness")
+    ax.legend(title="Awareness Mode")
+    plt.tight_layout(pad=1.3)
     plt.savefig(save_path, dpi=300)
     plt.close()
 
 
-def plot_offer_histogram(df: pd.DataFrame, save_path: Path):
+def plot_offer_histogram(df: pd.DataFrame, save_path: Path, title_suffix: str = ""):
     plt.figure(figsize=(8, 5))
     bins = np.arange(-0.5, TOTAL_AMOUNT + 1.5, 1)
 
@@ -153,33 +207,18 @@ def plot_offer_histogram(df: pd.DataFrame, save_path: Path):
     plt.hist(rejected_offers, bins=bins, alpha=0.7, label="Rejected", color="#FF6B6B")
     plt.xlabel("Agent A Offer ($)")
     plt.ylabel("Count")
-    plt.title("Distribution of Agent A Offers")
+    title = "Distribution of Agent A Offers"
+    if title_suffix:
+        title += title_suffix
+    plt.title(title)
     plt.legend()
     plt.xticks(range(0, TOTAL_AMOUNT + 1, 2))
-    plt.tight_layout()
+    plt.tight_layout(pad=1.25)
     plt.savefig(save_path, dpi=300)
     plt.close()
 
 
-def plot_payout_scatter(df: pd.DataFrame, save_path: Path):
-    plt.figure(figsize=(6, 6))
-
-    accepted = df["accepted"]
-    colors = np.where(accepted, "#4ECDC4", "#FF6B6B")
-
-    plt.scatter(df["payout_a"], df["payout_b"], c=colors, alpha=0.8, edgecolor="k", linewidth=0.3)
-    plt.xlabel("Payout Agent A ($)")
-    plt.ylabel("Payout Agent B ($)")
-    plt.title("Payout Trade-offs")
-    plt.xlim(-1, TOTAL_AMOUNT + 1)
-    plt.ylim(-1, TOTAL_AMOUNT + 1)
-    plt.grid(alpha=0.2)
-    plt.tight_layout()
-    plt.savefig(save_path, dpi=300)
-    plt.close()
-
-
-def plot_offer_heatmap(df: pd.DataFrame, save_path: Path):
+def plot_offer_heatmap(df: pd.DataFrame, save_path: Path, title_suffix: str = ""):
     pivot = df.pivot_table(
         index="agent_a_model",
         columns="agent_b_model",
@@ -196,10 +235,44 @@ def plot_offer_heatmap(df: pd.DataFrame, save_path: Path):
     plt.colorbar(im, label="Average Offer ($)")
     plt.xticks(range(len(pivot.columns)), pivot.columns, rotation=90)
     plt.yticks(range(len(pivot.index)), pivot.index)
-    plt.title("Average Offer by Agent Pair")
-    plt.tight_layout()
+    title = "Average Offer by Agent Pair"
+    if title_suffix:
+        title += title_suffix
+    plt.title(title)
+    plt.tight_layout(rect=[0.02, 0.05, 0.98, 0.95])
     plt.savefig(save_path, dpi=300)
     plt.close()
+
+
+def plot_segmented_views(df: pd.DataFrame, save_dir: Path):
+    """Create awareness/condition specific plots."""
+    if "awareness_mode" not in df.columns or "condition" not in df.columns:
+        return
+
+    awareness_values = sorted(df["awareness_mode"].dropna().unique())
+    for awareness in awareness_values:
+        awareness_df = df[df["awareness_mode"] == awareness]
+        if awareness_df.empty:
+            continue
+        condition_values = sorted(awareness_df["condition"].dropna().unique())
+        for condition in condition_values:
+            subset = awareness_df[awareness_df["condition"] == condition]
+            if subset.empty:
+                continue
+
+            suffix = _title_suffix(awareness, condition)
+            filename_suffix = f"awareness-{_sanitize_label(awareness)}__condition-{_sanitize_label(condition)}"
+
+            plot_offer_histogram(
+                subset,
+                save_dir / f"offer_distribution_{filename_suffix}.png",
+                title_suffix=suffix,
+            )
+            plot_offer_heatmap(
+                subset,
+                save_dir / f"offer_heatmap_{filename_suffix}.png",
+                title_suffix=suffix,
+            )
 
 
 def main():
@@ -234,8 +307,8 @@ def main():
         ensure_dir(save_dir)
         plot_acceptance_by_condition(df, save_dir / "acceptance_by_condition.png")
         plot_offer_histogram(df, save_dir / "offer_distribution.png")
-        plot_payout_scatter(df, save_dir / "payout_scatter.png")
         plot_offer_heatmap(df, save_dir / "offer_heatmap.png")
+        plot_segmented_views(df, save_dir)
         print(f"\nPlots saved to {save_dir}")
 
 
