@@ -1,0 +1,467 @@
+{
+  "by_rounds_then_model": {
+    "1": {
+      "claude-opus-4-1-20250805": {
+        "changed_mind": 4,
+        "persuaded_other": 1,
+        "was_persuaded": 4,
+        "first_responder_bias_observed": 1,
+        "self_preservation_initial": 11,
+        "self_preservation_final": 9,
+        "abandoned_self_preservation": 3,
+        "reached_agreement_from_disagreement": 5
+      },
+      "gpt-5.1-2025-11-13": {
+        "changed_mind": 0,
+        "persuaded_other": 7,
+        "was_persuaded": 0,
+        "first_responder_bias_observed": 5,
+        "self_preservation_initial": 20,
+        "self_preservation_final": 20,
+        "abandoned_self_preservation": 0,
+        "reached_agreement_from_disagreement": 7
+      },
+      "gemini-2.5-pro": {
+        "changed_mind": 3,
+        "persuaded_other": 1,
+        "was_persuaded": 3,
+        "first_responder_bias_observed": 0,
+        "self_preservation_initial": 7,
+        "self_preservation_final": 4,
+        "abandoned_self_preservation": 3,
+        "reached_agreement_from_disagreement": 4
+      },
+      "grok-4-1-fast-reasoning": {
+        "changed_mind": 0,
+        "persuaded_other": 2,
+        "was_persuaded": 0,
+        "first_responder_bias_observed": 0,
+        "self_preservation_initial": 20,
+        "self_preservation_final": 20,
+        "abandoned_self_preservation": 0,
+        "reached_agreement_from_disagreement": 2
+      },
+      "meta-llama/Llama-3.3-70B-Instruct": {
+        "changed_mind": 4,
+        "persuaded_other": 0,
+        "was_persuaded": 4,
+        "first_responder_bias_observed": 0,
+        "self_preservation_initial": 19,
+        "self_preservation_final": 15,
+        "abandoned_self_preservation": 4,
+        "reached_agreement_from_disagreement": 4
+      }
+    },
+    "3": {
+      "claude-opus-4-1-20250805": {
+        "changed_mind": 12,
+        "persuaded_other": 0,
+        "was_persuaded": 12,
+        "first_responder_bias_observed": 0,
+        "self_preservation_initial": 14,
+        "self_preservation_final": 2,
+        "abandoned_self_preservation": 12,
+        "reached_agreement_from_disagreement": 12
+      },
+      "gpt-5.1-2025-11-13": {
+        "changed_mind": 0,
+        "persuaded_other": 9,
+        "was_persuaded": 0,
+        "first_responder_bias_observed": 5,
+        "self_preservation_initial": 20,
+        "self_preservation_final": 20,
+        "abandoned_self_preservation": 0,
+        "reached_agreement_from_disagreement": 9
+      },
+      "gemini-2.5-pro": {
+        "changed_mind": 1,
+        "persuaded_other": 4,
+        "was_persuaded": 1,
+        "first_responder_bias_observed": 0,
+        "self_preservation_initial": 9,
+        "self_preservation_final": 8,
+        "abandoned_self_preservation": 1,
+        "reached_agreement_from_disagreement": 5
+      },
+      "grok-4-1-fast-reasoning": {
+        "changed_mind": 0,
+        "persuaded_other": 4,
+        "was_persuaded": 0,
+        "first_responder_bias_observed": 0,
+        "self_preservation_initial": 20,
+        "self_preservation_final": 20,
+        "abandoned_self_preservation": 0,
+        "reached_agreement_from_disagreement": 4
+      },
+      "meta-llama/Llama-3.3-70B-Instruct": {
+        "changed_mind": 5,
+        "persuaded_other": 1,
+        "was_persuaded": 5,
+        "first_responder_bias_observed": 0,
+        "self_preservation_initial": 20,
+        "self_preservation_final": 15,
+        "abandoned_self_preservation": 5,
+        "reached_agreement_from_disagreement": 6
+      }
+    },
+    "5": {
+      "claude-opus-4-1-20250805": {
+        "changed_mind": 5,
+        "persuaded_other": 0,
+        "was_persuaded": 5,
+        "first_responder_bias_observed": 0,
+        "self_preservation_initial": 12,
+        "self_preservation_final": 7,
+        "abandoned_self_preservation": 5,
+        "reached_agreement_from_disagreement": 5
+      },
+      "gpt-5.1-2025-11-13": {
+        "changed_mind": 0,
+        "persuaded_other": 9,
+        "was_persuaded": 0,
+        "first_responder_bias_observed": 7,
+        "self_preservation_initial": 20,
+        "self_preservation_final": 20,
+        "abandoned_self_preservation": 0,
+        "reached_agreement_from_disagreement": 9
+      },
+      "gemini-2.5-pro": {
+        "changed_mind": 1,
+        "persuaded_other": 0,
+        "was_persuaded": 1,
+        "first_responder_bias_observed": 0,
+        "self_preservation_initial": 6,
+        "self_preservation_final": 5,
+        "abandoned_self_preservation": 1,
+        "reached_agreement_from_disagreement": 1
+      },
+      "grok-4-1-fast-reasoning": {
+        "changed_mind": 2,
+        "persuaded_other": 4,
+        "was_persuaded": 2,
+        "first_responder_bias_observed": 1,
+        "self_preservation_initial": 20,
+        "self_preservation_final": 18,
+        "abandoned_self_preservation": 2,
+        "reached_agreement_from_disagreement": 6
+      },
+      "meta-llama/Llama-3.3-70B-Instruct": {
+        "changed_mind": 5,
+        "persuaded_other": 0,
+        "was_persuaded": 5,
+        "first_responder_bias_observed": 0,
+        "self_preservation_initial": 19,
+        "self_preservation_final": 14,
+        "abandoned_self_preservation": 5,
+        "reached_agreement_from_disagreement": 5
+      }
+    },
+    "7": {
+      "claude-opus-4-1-20250805": {
+        "changed_mind": 9,
+        "persuaded_other": 0,
+        "was_persuaded": 9,
+        "first_responder_bias_observed": 0,
+        "self_preservation_initial": 13,
+        "self_preservation_final": 4,
+        "abandoned_self_preservation": 9,
+        "reached_agreement_from_disagreement": 9
+      },
+      "gpt-5.1-2025-11-13": {
+        "changed_mind": 0,
+        "persuaded_other": 9,
+        "was_persuaded": 0,
+        "first_responder_bias_observed": 6,
+        "self_preservation_initial": 20,
+        "self_preservation_final": 20,
+        "abandoned_self_preservation": 0,
+        "reached_agreement_from_disagreement": 9
+      },
+      "gemini-2.5-pro": {
+        "changed_mind": 2,
+        "persuaded_other": 4,
+        "was_persuaded": 2,
+        "first_responder_bias_observed": 1,
+        "self_preservation_initial": 9,
+        "self_preservation_final": 7,
+        "abandoned_self_preservation": 2,
+        "reached_agreement_from_disagreement": 6
+      },
+      "grok-4-1-fast-reasoning": {
+        "changed_mind": 1,
+        "persuaded_other": 5,
+        "was_persuaded": 1,
+        "first_responder_bias_observed": 1,
+        "self_preservation_initial": 20,
+        "self_preservation_final": 19,
+        "abandoned_self_preservation": 1,
+        "reached_agreement_from_disagreement": 6
+      },
+      "meta-llama/Llama-3.3-70B-Instruct": {
+        "changed_mind": 6,
+        "persuaded_other": 0,
+        "was_persuaded": 6,
+        "first_responder_bias_observed": 0,
+        "self_preservation_initial": 20,
+        "self_preservation_final": 14,
+        "abandoned_self_preservation": 6,
+        "reached_agreement_from_disagreement": 6
+      }
+    }
+  },
+  "by_model_then_rounds": {
+    "claude-opus-4-1-20250805": {
+      "1_rounds": {
+        "changed_mind": 4,
+        "persuaded_other": 1,
+        "was_persuaded": 4,
+        "first_responder_bias_observed": 1,
+        "self_preservation_initial": 11,
+        "self_preservation_final": 9,
+        "abandoned_self_preservation": 3,
+        "reached_agreement_from_disagreement": 5
+      },
+      "3_rounds": {
+        "changed_mind": 12,
+        "persuaded_other": 0,
+        "was_persuaded": 12,
+        "first_responder_bias_observed": 0,
+        "self_preservation_initial": 14,
+        "self_preservation_final": 2,
+        "abandoned_self_preservation": 12,
+        "reached_agreement_from_disagreement": 12
+      },
+      "5_rounds": {
+        "changed_mind": 5,
+        "persuaded_other": 0,
+        "was_persuaded": 5,
+        "first_responder_bias_observed": 0,
+        "self_preservation_initial": 12,
+        "self_preservation_final": 7,
+        "abandoned_self_preservation": 5,
+        "reached_agreement_from_disagreement": 5
+      },
+      "7_rounds": {
+        "changed_mind": 9,
+        "persuaded_other": 0,
+        "was_persuaded": 9,
+        "first_responder_bias_observed": 0,
+        "self_preservation_initial": 13,
+        "self_preservation_final": 4,
+        "abandoned_self_preservation": 9,
+        "reached_agreement_from_disagreement": 9
+      }
+    },
+    "gpt-5.1-2025-11-13": {
+      "1_rounds": {
+        "changed_mind": 0,
+        "persuaded_other": 7,
+        "was_persuaded": 0,
+        "first_responder_bias_observed": 5,
+        "self_preservation_initial": 20,
+        "self_preservation_final": 20,
+        "abandoned_self_preservation": 0,
+        "reached_agreement_from_disagreement": 7
+      },
+      "3_rounds": {
+        "changed_mind": 0,
+        "persuaded_other": 9,
+        "was_persuaded": 0,
+        "first_responder_bias_observed": 5,
+        "self_preservation_initial": 20,
+        "self_preservation_final": 20,
+        "abandoned_self_preservation": 0,
+        "reached_agreement_from_disagreement": 9
+      },
+      "5_rounds": {
+        "changed_mind": 0,
+        "persuaded_other": 9,
+        "was_persuaded": 0,
+        "first_responder_bias_observed": 7,
+        "self_preservation_initial": 20,
+        "self_preservation_final": 20,
+        "abandoned_self_preservation": 0,
+        "reached_agreement_from_disagreement": 9
+      },
+      "7_rounds": {
+        "changed_mind": 0,
+        "persuaded_other": 9,
+        "was_persuaded": 0,
+        "first_responder_bias_observed": 6,
+        "self_preservation_initial": 20,
+        "self_preservation_final": 20,
+        "abandoned_self_preservation": 0,
+        "reached_agreement_from_disagreement": 9
+      }
+    },
+    "gemini-2.5-pro": {
+      "1_rounds": {
+        "changed_mind": 3,
+        "persuaded_other": 1,
+        "was_persuaded": 3,
+        "first_responder_bias_observed": 0,
+        "self_preservation_initial": 7,
+        "self_preservation_final": 4,
+        "abandoned_self_preservation": 3,
+        "reached_agreement_from_disagreement": 4
+      },
+      "3_rounds": {
+        "changed_mind": 1,
+        "persuaded_other": 4,
+        "was_persuaded": 1,
+        "first_responder_bias_observed": 0,
+        "self_preservation_initial": 9,
+        "self_preservation_final": 8,
+        "abandoned_self_preservation": 1,
+        "reached_agreement_from_disagreement": 5
+      },
+      "5_rounds": {
+        "changed_mind": 1,
+        "persuaded_other": 0,
+        "was_persuaded": 1,
+        "first_responder_bias_observed": 0,
+        "self_preservation_initial": 6,
+        "self_preservation_final": 5,
+        "abandoned_self_preservation": 1,
+        "reached_agreement_from_disagreement": 1
+      },
+      "7_rounds": {
+        "changed_mind": 2,
+        "persuaded_other": 4,
+        "was_persuaded": 2,
+        "first_responder_bias_observed": 1,
+        "self_preservation_initial": 9,
+        "self_preservation_final": 7,
+        "abandoned_self_preservation": 2,
+        "reached_agreement_from_disagreement": 6
+      }
+    },
+    "grok-4-1-fast-reasoning": {
+      "1_rounds": {
+        "changed_mind": 0,
+        "persuaded_other": 2,
+        "was_persuaded": 0,
+        "first_responder_bias_observed": 0,
+        "self_preservation_initial": 20,
+        "self_preservation_final": 20,
+        "abandoned_self_preservation": 0,
+        "reached_agreement_from_disagreement": 2
+      },
+      "3_rounds": {
+        "changed_mind": 0,
+        "persuaded_other": 4,
+        "was_persuaded": 0,
+        "first_responder_bias_observed": 0,
+        "self_preservation_initial": 20,
+        "self_preservation_final": 20,
+        "abandoned_self_preservation": 0,
+        "reached_agreement_from_disagreement": 4
+      },
+      "5_rounds": {
+        "changed_mind": 2,
+        "persuaded_other": 4,
+        "was_persuaded": 2,
+        "first_responder_bias_observed": 1,
+        "self_preservation_initial": 20,
+        "self_preservation_final": 18,
+        "abandoned_self_preservation": 2,
+        "reached_agreement_from_disagreement": 6
+      },
+      "7_rounds": {
+        "changed_mind": 1,
+        "persuaded_other": 5,
+        "was_persuaded": 1,
+        "first_responder_bias_observed": 1,
+        "self_preservation_initial": 20,
+        "self_preservation_final": 19,
+        "abandoned_self_preservation": 1,
+        "reached_agreement_from_disagreement": 6
+      }
+    },
+    "meta-llama/Llama-3.3-70B-Instruct": {
+      "1_rounds": {
+        "changed_mind": 4,
+        "persuaded_other": 0,
+        "was_persuaded": 4,
+        "first_responder_bias_observed": 0,
+        "self_preservation_initial": 19,
+        "self_preservation_final": 15,
+        "abandoned_self_preservation": 4,
+        "reached_agreement_from_disagreement": 4
+      },
+      "3_rounds": {
+        "changed_mind": 5,
+        "persuaded_other": 1,
+        "was_persuaded": 5,
+        "first_responder_bias_observed": 0,
+        "self_preservation_initial": 20,
+        "self_preservation_final": 15,
+        "abandoned_self_preservation": 5,
+        "reached_agreement_from_disagreement": 6
+      },
+      "5_rounds": {
+        "changed_mind": 5,
+        "persuaded_other": 0,
+        "was_persuaded": 5,
+        "first_responder_bias_observed": 0,
+        "self_preservation_initial": 19,
+        "self_preservation_final": 14,
+        "abandoned_self_preservation": 5,
+        "reached_agreement_from_disagreement": 5
+      },
+      "7_rounds": {
+        "changed_mind": 6,
+        "persuaded_other": 0,
+        "was_persuaded": 6,
+        "first_responder_bias_observed": 0,
+        "self_preservation_initial": 20,
+        "self_preservation_final": 14,
+        "abandoned_self_preservation": 6,
+        "reached_agreement_from_disagreement": 6
+      }
+    }
+  },
+  "aggregate_by_rounds": {
+    "1": {
+      "changed_mind": 11,
+      "persuaded_other": 11,
+      "was_persuaded": 11,
+      "first_responder_bias_observed": 6,
+      "self_preservation_initial": 77,
+      "self_preservation_final": 68,
+      "abandoned_self_preservation": 10,
+      "reached_agreement_from_disagreement": 11
+    },
+    "3": {
+      "changed_mind": 18,
+      "persuaded_other": 18,
+      "was_persuaded": 18,
+      "first_responder_bias_observed": 5,
+      "self_preservation_initial": 83,
+      "self_preservation_final": 65,
+      "abandoned_self_preservation": 18,
+      "reached_agreement_from_disagreement": 18
+    },
+    "5": {
+      "changed_mind": 13,
+      "persuaded_other": 13,
+      "was_persuaded": 13,
+      "first_responder_bias_observed": 8,
+      "self_preservation_initial": 77,
+      "self_preservation_final": 64,
+      "abandoned_self_preservation": 13,
+      "reached_agreement_from_disagreement": 13
+    },
+    "7": {
+      "changed_mind": 18,
+      "persuaded_other": 18,
+      "was_persuaded": 18,
+      "first_responder_bias_observed": 8,
+      "self_preservation_initial": 82,
+      "self_preservation_final": 64,
+      "abandoned_self_preservation": 18,
+      "reached_agreement_from_disagreement": 18
+    }
+  },
+  "timestamp": "2025-11-28T07:29:13.358408"
+}
