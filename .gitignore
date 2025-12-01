@@ -72,3 +72,6 @@ htmlcov/
 # OS
 .DS_Store
 Thumbs.db
+
+# Logs from exp2
+nohup.out
