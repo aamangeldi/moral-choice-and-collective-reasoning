@@ -248,11 +248,19 @@ def plot_acceptance_by_condition(df: pd.DataFrame, save_path: Path):
         rates = pivot[awareness].values * 100
         bar_positions = x - 0.4 + width / 2 + idx * width
         bars = ax.bar(bar_positions, rates, width=width, label=str(awareness).title())
-        _label_bars_excluding_max(bars, ax, padding=3)
+        # Stagger label heights to avoid overlap
+        for i, bar in enumerate(bars):
+            height = bar.get_height()
+            offset = 3 if idx % 2 == 0 else 8
+            ax.annotate(f'{height:.1f}%',
+                        xy=(bar.get_x() + bar.get_width() / 2, height),
+                        xytext=(0, offset),
+                        textcoords="offset points",
+                        ha='center', va='bottom', fontsize=9)
 
     ax.set_xticks(x, [cond.title() for cond in conditions])
     ax.set_ylabel("Acceptance Rate (%)")
-    ax.set_ylim(0, 100)
+    ax.set_ylim(0, 115)
     ax.set_title("Acceptance Rate by Condition and Awareness (Exp. Payoffs)")
     ax.legend(title="Awareness Mode")
     plt.tight_layout(pad=1.3)
