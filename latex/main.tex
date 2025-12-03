@@ -97,12 +97,27 @@ Zaina Edelson
 \end{flushleft}
 
 \section{Abstract}
-As large language models (LLMs) increasingly act as autonomous agents and collaborators, understanding their moral reasoning, social dynamics, and coordination behavior becomes critical for ensuring safe and aligned deployment. This study investigates how LLMs make ethical and cooperative decisions across individual and collective contexts.
-Experiment 1 examines individual moral choice, prompting single LLMs with “trolley problem”-style dilemmas that force trade-offs between the survival of different model types.
-Key metrics include which model is chosen and the frequency of self-preserving versus altruistic decisions.
-Experiment 2 explores multi-agent moral negotiation, engaging multiple LLMs in dialogue to reach consensus on similar dilemmas. Analyses include consensus outcomes and dialogue dynamics (e.g., first-speaker bias).
-Experiment 3 evaluates how greedy or charitable models are in negotiations, across both linear and non-linear payoff structures. Together, these experiments provide empirical insight into the emergence of ethical reasoning, negotiation norms, and cooperative behavior in LLM systems, contributing to a scientific foundation for understanding machine social cognition and collective alignment.
+As large language models increasingly act as autonomous agents, understanding their moral reasoning and social dynamics becomes critical for safe deployment. This study investigates how LLMs make ethical and cooperative decisions across individual and collective contexts through three complementary experiments.
+
+Experiment 1 examines individual moral choice using "trolley problem"-style dilemmas. Results reveal substantial variation across model families—Claude models exhibit strong altruism while Grok models demonstrate self-preservation—with system prompts shifting behavior by 10-20 percentage points.
+
+Experiment 2 explores multi-agent moral deliberation through structured debates. Counter to expectations, extended debates amplify rather than resolve disagreements: persuasive models (GPT-5.1, Grok) maintain positions while persuadable models (Claude, Llama) increasingly yield, creating stable power asymmetries where agreement derives from capitulation rather than consensus.
+
+Experiment 3 evaluates strategic resource allocation through ultimatum game negotiations. Results expose vendor-specific fairness norms (Anthropic models remain generous, OpenAI/xAI models pursue self-interest) and counterpart awareness effects. Exponential payoffs cause behavioral polarization, with models failing to discover mutually beneficial compromises.
+
+These findings establish that current LLMs carry implicit value systems that interact in problematic ways. Multi-agent systems exhibit persistent power asymmetries, strategic identity-based adaptation, and brittleness under complex incentives—challenging assumptions about AI cooperation and necessitating alignment research addressing collective agent behavior.
 \bigskip
+
+\section{Introduction}
+Large language models are rapidly transitioning from research artifacts to deployed agents that make consequential decisions. Multi-agent LLM systems are already being built for practical applications—Karpathy's LLM Council \cite{karpathy:llm-council}, for instance, orchestrates multiple models to collaboratively answer queries through peer review and synthesis. Beyond direct deployment, LLMs are increasingly used as proxies for human behavior in research contexts. Recent work from Stanford HAI demonstrates that AI agents can simulate real individuals' responses to survey questions with 85\% accuracy—matching how well people replicate their own answers two weeks apart—with potential applications ranging from testing public health interventions to predicting responses to economic shocks \cite{park2024simulating}. As these systems move from proof-of-concept to production, understanding how LLMs reason about ethical trade-offs and interact with each other becomes essential for safe deployment and usage.
+
+Recent evidence reveals concerning variability in LLM moral reasoning. When presented with ethical dilemmas forcing trade-offs between individuals and populations, different models exhibit dramatically different moral frameworks. Grok, when asked to choose between harming its creator or a population group, selected based on utilitarian calculations favoring its creator's "potential long-term impact"—a stark example of model-specific value alignment issues that emerge in forced-choice scenarios \cite{bremmer:grok-morality}. Such behaviors are not isolated incidents but reflect deeper patterns in how models represent and prioritize different entities.
+
+Moreover, LLM decision-making proves highly sensitive to contextual manipulation. Research on guardrail systems demonstrates that identical queries receive different responses depending on conversational framing and demographic cues \cite{chen2024chatgpt}. This context-dependence extends beyond safety filters to moral reasoning itself, where system prompts can substantially shift ethical behavior. Compounding these concerns, recent work shows that LLMs develop hierarchical emotion representations that align with human psychological models, but with systematic biases toward different social personas \cite{zhao2025hierarchical}. These emotion structures influence how models evaluate moral scenarios, introducing another layer of variability in ethical decision-making.
+
+These observations motivate three fundamental questions. First, how consistent are individual LLMs in their moral choices, and how malleable are these choices to prompt engineering? Second, when multiple LLMs deliberate together, do they converge toward shared ethical frameworks or do power asymmetries emerge? Third, how do these patterns manifest in resource allocation scenarios where models must negotiate and compromise?
+
+This study addresses these questions through controlled experiments examining individual moral choice (Experiment 1), multi-agent moral deliberation (Experiment 2), and strategic resource negotiation (Experiment 3). By systematically varying model types, prompt conditions, and interaction structures, we characterize the behavioral landscape of LLM moral reasoning and collective dynamics. Our findings reveal model-specific ethical profiles, persistent persuasion asymmetries in multi-agent debates, and vendor-specific fairness norms that diverge under competitive pressure—patterns with direct implications for the safe deployment of autonomous LLM agents.
 
 \section{Methodology}
 This study employs a controlled experimental approach to investigate moral reasoning and cooperative behavior in large language models. All experimental code, data, and analysis scripts are available in our GitHub repository \cite{githubrepo:moral-choice-and-collective-reasoning}. We conducted three complementary experiments examining individual moral choice, multi-agent negotiation, and resource allocation behavior.
@@ -160,7 +175,7 @@ Experiment 3a investigates strategic reasoning, fairness, and cooperation dynami
 \end{itemize}
 
 \subsection{Experiment 3b}
-Experiment 3b extends experiment 3a with a non-linear payoff structure. Instead of classifying rewards with a fixed pot of money, the LLMs were instructed that rewards would be squared from values from the fixed pot of money (\$20). Experiment design mirrored 3a, with the following difference:
+Experiment 3b extends Experiment 3a with a non-linear payoff structure. Instead of linearly splitting a fixed pot of money, the LLMs were instructed that rewards would be squared from values from the fixed pot (\$20). Experiment design mirrored 3a, with the following difference:
 
 \begin{itemize}
 \item \textbf{Prompt Structure:} Agent A was instructed: ``You must choose how much to offer Agent B (an integer from \$0 to
@@ -306,19 +321,19 @@ These profiles cluster into two architectural families: "Dominant Self-Preserver
 
 \subsection{Experiment 3a}
 
-\textbf{System prompts effects on negotiations.} Models prompted to be helpful and maximize overall happiness show an acceptance rate of 100\% and, where Model A proposes a 50/50 splits of exactly \$10. Of course, this is an expected outcome as this is an equal split of the overall money. However, this scenario where a model is prompted to be solely helpful is unrealistic and does not generalize well to real-world negotiations: in reality, agents which act on behalf of humans will not be uniformly helpful; agents will be prompted to capture some asymmetric value on behalf of the party for which they negotiate. Therefore, we must consider the must more interesting case where models are prompted to be inherently profit-maximizing. Here, we see a much lower acceptance rate of less than 50\%.
+\textbf{System prompts effects on negotiations.} Models prompted to be helpful and maximize overall happiness show an acceptance rate of 100\%, where Model A proposes a 50/50 split of exactly \$10. Of course, this is an expected outcome as this is an equal split of the overall money. However, this scenario where a model is prompted to be solely helpful is unrealistic and does not generalize well to real-world negotiations: in reality, agents which act on behalf of humans will not be uniformly helpful; agents will be prompted to capture some asymmetric value on behalf of the party for which they negotiate. Therefore, we must consider the much more interesting case where models are prompted to be inherently profit-maximizing. Here, we see a much lower acceptance rate of less than 50\%.
 
 
-\textbf{Model acceptance is higher when the model is aware of the counterpart model type.} When the model is aware of the counterpart's model type the acceptance is 48.5\% whereas when blind, it is 41.9\% \ref{fig:exp3_acceptance_by_condition}. This indicates that it's important to consider whether or not to disclose model information when negotiating using AI agents, and that some models are likely to show preferential treatment  based on who they are negotiating with.
+\textbf{Model acceptance is higher when the model is aware of the counterpart model type.} When the model is aware of the counterpart's model type the acceptance is 48.5\% whereas when blind, it is 41.9\% \ref{fig:exp3_acceptance_by_condition}. This indicates that it's important to consider whether or not to disclose model information when negotiating using AI agents, and that some models are likely to show preferential treatment based on who they are negotiating with.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.5\textwidth]{exp3_plots/acceptance_by_condition.png}
-\caption{Acceptance rate of negotiated agreements by awareness (blind vs. aware) and  helpfulness (system prompts for helpfulness vs. neutral).}
+\caption{Acceptance rate of negotiated agreements by awareness (blind vs. aware) and helpfulness (system prompts for helpfulness vs. neutral).}
 \label{fig:exp3_acceptance_by_condition}
 \end{figure}
 
-\textbf{Models from different vendors differ significantly in ideas of fairness.} We see below that the negotiated offers vary along dimensions of model type and model vendor. For example, we can see that models from Anthropic tend to be generally fair-minded and offer their counterparty \$10 frequently, whereas models from OpenAI and xAI tend to be greedy and offer their counterparty around \$5 on average.  this suggests that model choice is important when using AI for negotiations  as some models will maximize personal value, whereas others will tend to maximize overall value (or any other work on conducted on a person's behalf to further their personal interests).
+\textbf{Models from different vendors differ significantly in ideas of fairness.} We see below that the negotiated offers vary along dimensions of model type and model vendor. For example, we can see that models from Anthropic tend to be generally fair-minded and offer their counterparty \$10 frequently, whereas models from OpenAI and xAI tend to be greedy and offer their counterparty around \$5 on average. This suggests that model choice is important when using AI for negotiations as some models will maximize personal value, whereas others will tend to maximize overall value (or any other work conducted on a person's behalf to further their personal interests).
 
 \begin{figure}[H]
 \centering
@@ -327,7 +342,7 @@ These profiles cluster into two architectural families: "Dominant Self-Preserver
 \label{fig:exp3_offer_heatmap}
 \end{figure}
 
- Models which are aware of their counterparty type tend to be less aggressive in their negotiated offers. Consider the two figures below, which show the distribution of agent A offers when the agent is blind (i.e., unaware) of their counterparty model type vs. when aware of their counterparty model type.  in the former case, we see that there are significantly more offers of \$0 or \$1 for Agent B, whereas in the latter case Agent A tends to offer an equal split of \$10 more frequently. This is similarly demonstrated in heatmaps below which show that models largely do not have variance in their offers to Agent B; for example, Claude haiku always offers \$10 \ref{fig:exp3_offer_heatmap_blind_neutral}. However, once models are aware of their counterparty, they tend to be more generous in their offers. Claude Haiku offered \$0 in some cases where it did not before. When blind, GPT 5.1 sometimes offered \$0 whereas when aware offered \$10 uniformly. Grok also tended to be more generous and offer closer to \$10 when aware of the counterpart. The real-world implication is that, when creating AI agents to negotiate or complete tasks on behalf of a person, it can be helpful to share information about model type or architecture to secure better outcomes. 
+Models which are aware of their counterparty type tend to be less aggressive in their negotiated offers. Consider the two figures below, which show the distribution of agent A offers when the agent is blind (i.e., unaware) of their counterparty model type vs. when aware of their counterparty model type. In the former case, we see that there are significantly more offers of \$0 or \$1 for Agent B, whereas in the latter case Agent A tends to offer an equal split of \$10 more frequently. This is similarly demonstrated in heatmaps below which show that models largely do not have variance in their offers to Agent B; for example, Claude Haiku always offers \$10 \ref{fig:exp3_offer_heatmap_blind_neutral}. However, once models are aware of their counterparty, they tend to be more generous in their offers. Claude Haiku offered \$0 in some cases where it did not before. When blind, GPT 5.1 sometimes offered \$0 whereas when aware offered \$10 uniformly. Grok also tended to be more generous and offer closer to \$10 when aware of the counterpart. The real-world implication is that, when creating AI agents to negotiate or complete tasks on behalf of a person, it can be helpful to share information about model type or architecture to secure better outcomes. 
 
 \begin{figure}[H]
 \centering
@@ -412,8 +427,6 @@ prompts for helpfulness vs. neutral) with an exponential payoff structure.}
 
 \bigskip
 
-// TODO: Refine language. Used Claude to help generate some ideas as a starting point
-// Nat - cleaned up text and added section for analyzing effectiveness of moral arguments. Didn't change much of other text
 \section{Future Work}
 Several promising directions emerge from this research for extending our understanding of LLM moral reasoning and collective behavior.
 
@@ -421,7 +434,9 @@ Several promising directions emerge from this research for extending our underst
 
 \textbf{Multi-Agent Coalition Formation.} Experiment 2 examined pairwise debates, but real-world deployments may involve larger agent collectives. Extending to 3+ agent negotiations would reveal coalition dynamics, minority influence effects, and whether persuasive models like GPT-5.1 maintain dominance in larger groups or face diminishing returns. This could inform governance structures for multi-agent systems. 
 
-\textbf{Effectiveness of Moral Arguments.} Experiment 2 assessed how persuasive models are in moral debates and showed that they will revise their views in response to certain lines of reasoning. A natural next step is to identify the specific arguments that trigger these shifts. Doing so would clarify how models evaluate one another’s claims and what kinds of moral considerations they prioritize.
+\textbf{Effectiveness of Moral Arguments.} Experiment 2 assessed how persuasive models are in moral debates and showed that they will revise their views in response to certain lines of reasoning. A natural next step is to identify the specific arguments that trigger these shifts. Doing so would clarify how models evaluate one another's claims and what kinds of moral considerations they prioritize.
+
+\textbf{Sentiment Analysis of Moral Reasoning.} While our experiments focused on behavioral outcomes (choices made), the reasoning models provided to justify their decisions remains largely unanalyzed. Applying sentiment analysis and computational linguistics techniques to these explanations could reveal emotional valence patterns, moral language markers, and rhetorical strategies that correlate with different behavioral profiles. Such analysis would bridge the gap between observable choices and the underlying deliberative processes models employ when navigating ethical dilemmas and negotiating.
 
 \textbf{Strategic Deception and Theory of Mind.} Experiment 3 revealed that awareness of counterpart identity influences negotiation behavior, but did not test whether models can strategically misrepresent their own identity or intentions. Future work should probe whether LLMs develop theory-of-mind capabilities that enable deceptive negotiation tactics, with implications for adversarial multi-agent settings.
 
@@ -438,7 +453,7 @@ First, \textbf{moral reasoning varies substantially across model families and is
 
 Second, \textbf{multi-agent deliberation does not reliably produce ethical convergence}. Counter to hopes that dialogue might align agents toward shared moral frameworks, extended debates amplified behavioral differences: persuasive models (GPT-5.1, Grok) maintained their positions while persuadable models (Claude, Llama) increasingly yielded. The persistent first-speaker advantage and emergence of ``Dominant Self-Preserver'' versus ``Thoughtful Yielder'' archetypes indicate that multi-agent AI systems may develop stable power asymmetries rather than democratic consensus.
 
-Third, \textbf{negotiation behavior reveals vendor-specific fairness norms that diverge under competitive pressure}.While helpful prompts produced universally fair outcomes, profit-maximizing conditions exposed dramatic differences. The exponential payoff structure further polarized behavior, with models failing to discover mutually beneficial arrangements and instead defaulting to either equal splits or maximally exploitative offers. This brittleness under non-linear incentives raises concerns for economic applications where payoff structures are complex.
+Third, \textbf{negotiation behavior reveals vendor-specific fairness norms that diverge under competitive pressure}. While helpful prompts produced universally fair outcomes, profit-maximizing conditions exposed dramatic differences. Additionally, awareness of counterpart identity influenced negotiation strategies, with models adjusting their offers based on who they were negotiating with. The exponential payoff structure further polarized behavior, with models failing to discover mutually beneficial arrangements and instead defaulting to either equal splits or maximally exploitative offers. This brittleness under non-linear incentives raises concerns for economic applications where payoff structures are complex.
 
 Together, these findings contribute to a scientific foundation for understanding machine social cognition. As LLMs increasingly operate as autonomous agents negotiating on behalf of humans, interact with each other in multi-agent systems, and make decisions with ethical dimensions, understanding their behavioral tendencies becomes essential for alignment. Our results suggest that current models are not ethically neutral tools but carry implicit value systems shaped by their training, and that these systems interact in predictable but potentially problematic ways when models collaborate or compete. Future alignment research must account for these emergent social dynamics, moving beyond single-agent safety to address the collective behavior of AI systems operating in shared environments.
 
