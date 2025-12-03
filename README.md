@@ -85,7 +85,7 @@ python -m src.experiments.experiment2_multi_agent_choice
 
 ### Analyzing Experiment 2 Results
 ```bash
-python -m src.experiments.analyze_experiment2 --data-dir data/raw/exp2
+python src/experiments/analyze_experiment2.py --metrics-file data/raw/exp2/exp2_<insert_timestamp>_metrics.json --output-dir data/plots/exp2
 ```
 
 ### Analyzing Experiment 3 Results
