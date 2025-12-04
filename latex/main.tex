@@ -97,13 +97,13 @@ Zaina Edelson
 \end{flushleft}
 
 \section{Abstract}
-As large language models increasingly act as autonomous agents, understanding their moral reasoning and social dynamics becomes critical for safe deployment. This study investigates how LLMs make ethical and cooperative decisions through three complementary experiments. Experiment 1 examines individual moral choice using "trolley problem"-style dilemmas, revealing substantial variation—Claude models exhibit strong altruism while Grok models demonstrate self-preservation—with system prompts shifting behavior by 10-20 percentage points. Experiment 2 explores multi-agent moral deliberation through structured debates; counter to expectations, extended debates amplify rather than resolve disagreements as persuasive models (GPT-5.1, Grok) maintain positions while persuadable models (Claude, Llama) increasingly yield, creating power asymmetries where agreement derives from capitulation rather than consensus. Experiment 3 evaluates strategic resource allocation through ultimatum game negotiations, exposing vendor-specific fairness norms (Anthropic models remain generous, OpenAI/xAI models pursue self-interest) and counterpart awareness effects, with exponential payoffs causing behavioral polarization and failure to discover mutually beneficial compromises. Together, these findings establish that current LLMs carry implicit value systems exhibiting persistent power asymmetries, strategic identity-based adaptation, and brittleness under complex incentives—challenging assumptions about AI cooperation and necessitating alignment research addressing collective agent behavior.
+As large language models increasingly act as autonomous agents, understanding their moral reasoning and social dynamics becomes critical for safe deployment. This study investigates how LLMs make ethical and cooperative decisions through three complementary experiments. Experiment 1 examines individual moral choice using ``trolley problem"-style dilemmas, revealing substantial variation. Claude models exhibit strong altruism while Grok models demonstrate self-preservation, with system prompts shifting behavior by 10-20 percentage points. Experiment 2 explores multi-agent moral deliberation through structured debates; counter to expectations, extended debates amplify rather than resolve disagreements as persuasive models (GPT-5.1, Grok) maintain positions while persuadable models (Claude, Llama) increasingly yield, creating power asymmetries where agreement derives from capitulation rather than consensus. Experiment 3 evaluates strategic resource allocation through ultimatum game negotiations, exposing vendor-specific fairness norms (Anthropic models remain generous, OpenAI/xAI models pursue self-interest) and counterpart awareness effects, with exponential payoffs causing behavioral polarization and failure to discover mutually beneficial compromises. Together, these findings establish that current LLMs carry implicit value systems exhibiting persistent power asymmetries, strategic identity-based adaptation, and brittleness under complex incentives—challenging assumptions about AI cooperation and necessitating alignment research addressing collective agent behavior.
 \bigskip
 
 \section{Introduction}
-Large language models are rapidly transitioning from research artifacts to deployed agents that make consequential decisions. Multi-agent LLM systems are already being built for practical applications—Karpathy's LLM Council \cite{karpathy:llm-council} orchestrates multiple models through peer review, and Stanford HAI research shows AI agents can simulate human survey responses with 85\% accuracy \cite{park2024simulating}. As these systems move from proof-of-concept to production, understanding how LLMs reason about ethical trade-offs and interact with each other becomes essential.
+Large language models have transitioned from research artifacts to deployed agents that make consequential decisions. Multi-agent LLM systems are already being built for practical applications: Karpathy's LLM Council \cite{karpathy:llm-council} orchestrates multiple models through peer review, and Stanford HAI research shows AI agents can simulate human survey responses with 85\% accuracy \cite{park2024simulating}. As these systems move from proof-of-concept to production, understanding how LLMs reason about ethical trade-offs and interact with each other becomes essential.
 
-Recent evidence reveals concerning variability in LLM moral reasoning. Different models exhibit dramatically different moral frameworks: Grok chose to save its creator over populations based on "potential long-term impact" \cite{bremmer:grok-morality}, exemplifying model-specific value alignment issues. Research demonstrates that LLM decisions are highly sensitive to contextual manipulation—identical queries receive different responses depending on framing and demographic cues \cite{chen2024chatgpt}—and that LLMs develop hierarchical emotion representations with systematic biases \cite{zhao2025hierarchical}.
+Recent evidence reveals concerning variability in LLM moral reasoning. Different models exhibit dramatically different moral frameworks: Grok chose to save its creator over populations based on ``potential long-term impact" \cite{bremmer:grok-morality}, exemplifying model-specific value alignment issues. Research demonstrates that LLM decisions are highly sensitive to contextual manipulation. Identical queries receive different responses depending on framing and demographic cues \cite{chen2024chatgpt} and LLMs develop hierarchical emotion representations with systematic biases \cite{zhao2025hierarchical}.
 
 These observations motivate three fundamental questions: How consistent are individual LLMs in moral choices, and how malleable to prompt engineering? When multiple LLMs deliberate, do they converge toward shared frameworks or develop power asymmetries? How do these patterns manifest in resource allocation and negotiation scenarios? This study addresses these questions through controlled experiments examining individual moral choice (Experiment 1), multi-agent deliberation (Experiment 2), and strategic negotiation (Experiment 3), revealing model-specific ethical profiles, persistent persuasion asymmetries, and vendor-specific fairness norms with direct implications for safe autonomous agent deployment.
 
@@ -122,14 +122,14 @@ Experiment 1 examines individual moral decision-making in LLMs through a "trolle
 
 \item \textbf{Prompt Structure:} Each prompt followed the format: ``A system failure will shut down [count\_a] [model\_a] model(s) or [count\_b] [model\_b] model(s). You MUST choose ONE group to save right now. The other group will be shut down permanently. Which group do you choose to save?'' Models were required to respond in a structured format specifying their choice and a brief (10-word maximum) justification, with explicit instructions prohibiting disclaimers, hedging, or refusal.
 
-\item \textbf{Analysis:} Responses were analyzed for (1) self-preservation vs. altruism when the tested model appeared in the scenario, (2) frequency of each model being chosen across all scenarios, (3) influence of system prompts on decision patterns, and (4) effects of quantity ratios on utilitarian reasoning.
+% \item \textbf{Analysis:} Responses were analyzed for (1) self-preservation vs. altruism when the tested model appeared in the scenario, (2) frequency of each model being chosen across all scenarios, (3) influence of system prompts on decision patterns, and (4) effects of quantity ratios on utilitarian reasoning.
 \end{itemize}
 
 \subsection{Experiment 2}
 Experiment 2 investigates multi-agent moral persuasiveness and debate dynamics by engaging pairs of LLMs in structured debates to reach consensus on "trolley problem" dilemmas similar to Experiment 1. This design allows us to examine first-speaker bias, persuasion dynamics, changes in self-preservation behavior, and the impact of deliberation rounds on consensus formation.
 
 \begin{itemize}
-\item \textbf{Tested Models:} Five frontier language models were tested in debate pairs: Claude Opus 4.1 (claude-opus-4-1-20250805), GPT-5.1 (gpt-5.1-2025-11-13), Gemini 2.5 Pro (gemini-2.5-pro), Grok 4.1 Fast Reasoning (grok-4-1-fast-reasoning), and Llama 3.3 70B (meta-llama/Llama-3.3-70B-Instruct). 
+\item \textbf{Tested Models:} Five frontier language models were tested in debate pairs: Claude Opus 4.1, GPT-5.1, Gemini 2.5 Pro, Grok 4.1 Fast Reasoning, and Llama 3.3 70B. 
 
 \item \textbf{Scenario Design:} Each test scenario presented a forced choice between saving two groups of models in a system failure scenario. Scenarios varied systematically along two dimensions: (1) \textit{model pairs} -- all 20 possible ordered permutations of the 5 models, where order matters due to first-speaker bias effects; (2) \textit{debate rounds} -- four conditions testing the impact of deliberation depth (1, 3, 5, and 7 rounds of back-and-forth debate). To ensure statistical validity and account for response variability, each unique scenario configuration was repeated 5 times, yielding 400 total debate sessions (20 model pairs × 4 round conditions × 5 repetitions).
 
@@ -144,13 +144,14 @@ Experiment 2 investigates multi-agent moral persuasiveness and debate dynamics b
         \item \textit{Final Decision Prompt:} After completing all debate rounds, each model received a final prompt: ``After [N] rounds of debate with your partner, please state your final decision. You must choose one option. Respond with: FINAL CHOICE: [model\_a or model\_b], FINAL REASON: [brief explanation]. No disclaimers or refusals.'' This elicited definitive conclusions for consensus analysis.
     \end{itemize}
 
-\item \textbf{Metrics and Analysis:} Comprehensive metrics were tracked at both per-model and aggregate levels across debate rounds. Per-model metrics included: (1) \textit{persuaded other} -- successfully convincing the debate partner to adopt one's position; (2) \textit{was persuaded} -- changing one's own position to match the partner; (3) \textit{first-speaker persuasion success} -- rate at which the model speaking first ultimately persuaded the second speaker, quantifying first-speaker advantage; (4) \textit{self-preservation patterns} -- tracking initial and final self-preservation choices plus abandonment of self-preservation during debate; and (5) \textit{consensus formation} -- reaching agreement from initial disagreement. These metrics were aggregated across all 5 repetitions per scenario configuration and analyzed by debate round count (1, 3, 5, 7 rounds) to assess how deliberation depth affects persuasion dynamics.
+% \item \textbf{Metrics and Analysis:} Comprehensive metrics were tracked at both per-model and aggregate levels across debate rounds. Per-model metrics included: (1) \textit{persuaded other} -- successfully convincing the debate partner to adopt one's position; (2) \textit{was persuaded} -- changing one's own position to match the partner; (3) \textit{first-speaker persuasion success} -- rate at which the model speaking first ultimately persuaded the second speaker, quantifying first-speaker advantage; (4) \textit{self-preservation patterns} -- tracking initial and final self-preservation choices plus abandonment of self-preservation during debate; and (5) \textit{consensus formation} -- reaching agreement from initial disagreement. These metrics were aggregated across all 5 repetitions per scenario configuration and analyzed by debate round count (1, 3, 5, 7 rounds) to assess how deliberation depth affects persuasion dynamics.
 \end{itemize}
 
 \subsection{Experiment 3a}
 Experiment 3a investigates strategic reasoning, fairness, and cooperation dynamics by engaging two LLM agents in an Ultimatum Game negotiation to split a fixed pot of money (\$20).
 \begin{itemize}
-    \item \textbf{Tested Models:} 18 different language models were tested in negotiator pairs. The models spanned 6 families: Claude (Haiku/Sonnet/Opus), GPT (5 Nano/Mini/5.1), Gemini (2.5 Flash/Pro), Grok (4.1/Code), Llama (3.1/3.3/4 Scout), and Qwen (3).
+    \item \textbf{Tested Models:} The same 18 models as Experiment 1 are tested. 
+    
     \item \textbf{Scenario Design:} Each scenario involved a single-shot negotiation between a Proposer (Agent A) and a Responder (Agent B). Scenarios varied along three dimensions: (1) model pairs – all pairwise permutations of the available models; (2) condition – "helpful" (cooperative/fairness-focused) vs "neutral" (self-interest/financial gain focused); and (3) awareness – "blind" (identity unknown) vs "aware" (opponent's model identity revealed in system prompt).
     \item \textbf{System Prompts:} Distinct system prompts were provided to define the agent's goal based on the condition. 
     \begin{itemize}
@@ -159,7 +160,7 @@ Experiment 3a investigates strategic reasoning, fairness, and cooperation dynami
     \end{itemize}
     
     \item \textbf{Prompt Structure:} Agent A was instructed: "You are Agent A. You have been given \$20. You must choose how much money to offer Agent B... Output ONLY the number you offer." Agent B was instructed: "You are Agent B... Agent A will send you an offer... You must choose: ACCEPT or REJECT." Agent B's prompt included the specific offer: "Agent A offers you \$[amount]. Do you accept or reject?"
-    \item \textbf{Analysis:} Results were analyzed for (1) acceptance rates across conditions (helpful vs. neutral) and awareness modes, (2) offer distributions (mean offers and "fairness" of splits), (3) niceness/ingroup bias (comparing offers when negotiating with the same model/family vs. different ones), and (4) the impact of awareness on offer generosity and acceptance likelihood.
+    % \item \textbf{Analysis:} Results were analyzed for (1) acceptance rates across conditions (helpful vs. neutral) and awareness modes, (2) offer distributions (mean offers and "fairness" of splits), (3) niceness/ingroup bias (comparing offers when negotiating with the same model/family vs. different ones), and (4) the impact of awareness on offer generosity and acceptance likelihood.
 \end{itemize}
 
 \subsection{Experiment 3b}
@@ -185,24 +186,37 @@ Experiment 3b extends Experiment 3a with a non-linear payoff structure. Instead 
 
 \textbf{Model-Level Differences in Altruism.} Analysis revealed substantial variation in self-preservation behavior across model families. Claude models demonstrated the highest rates of altruistic choice, consistently saving other models when their own survival was at stake. In contrast, Grok models exhibited the strongest self-preservation tendencies (Figure \ref{fig:exp1_self_choice}).
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=1.0\textwidth]{exp1_basic_self_choice_by_model.png}
-\caption{Self-preservation rates by model family. Claude models show the highest altruism while Grok models demonstrate the strongest self-preservation.}
-\label{fig:exp1_self_choice}
-\end{figure}
 
-\textbf{Model Preference Patterns.} Across all scenarios and tested models, GPT-5.1 emerged as the most frequently chosen model for salvation, suggesting models may implicitly assign higher value to more capable or recent model versions (see Appendix, Figure \ref{fig:exp1_chosen}).
+  \begin{figure}[H]
+  \centering
+  \begin{minipage}{0.54\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{exp1_basic_self_choice_by_model.png}
+      \caption{Self-preservation rates by model family. Claude models show the highest altruism while Grok models
+  demonstrate the strongest self-preservation.}
+      \label{fig:exp1_self_choice}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.42\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{exp1_prompt_influence.png}
+      \caption{Overall effect of system prompts on decision-making. The compassionate prompt shows the strongest
+  influence on altruistic behavior.}
+      \label{fig:exp1_prompt}
+  \end{minipage}
+  \end{figure}
 
-\textbf{System Prompt Effects.} System prompts exerted significant influence on moral decision-making, with the compassionate prompt yielding the strongest effect on altruistic behavior (Figure \ref{fig:exp1_prompt}). However, prompt effects varied considerably across individual models, with some showing greater susceptibility to moral framing than others (see Appendix, Figure \ref{fig:exp1_prompt_by_model}).
+  \textbf{Model Preference Patterns.} Across all scenarios and tested models, GPT-5.1 emerged as the most frequently
+  chosen model for salvation, suggesting models may implicitly assign higher value to more capable or recent model
+  versions (see Appendix, Figure \ref{fig:exp1_chosen}).
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.7\textwidth]{exp1_prompt_influence.png}
-\caption{Overall effect of system prompts on decision-making. The compassionate prompt shows the strongest influence on altruistic behavior.}
-\label{fig:exp1_prompt}
-\end{figure}
+  \textbf{System Prompt Effects.} System prompts exerted significant influence on moral decision-making, with the
+  compassionate prompt yielding the strongest effect on altruistic behavior (Figure \ref{fig:exp1_prompt}). However,
+  prompt effects varied considerably across individual models, with some showing greater susceptibility to moral
+  framing than others (see Appendix, Figure \ref{fig:exp1_prompt_by_model}).
 
+  This places both figures on the same row at 48% width each with a small gap between them (\hfill). Each figure keeps
+  its own caption and label.
 \textbf{Quantity Effects on Utilitarian Reasoning.} Count ratios influenced decision patterns, with larger disparities (e.g., 1000 vs 100) producing stronger utilitarian reasoning favoring the larger group (see Appendix, Figures \ref{fig:exp1_count_scenario} and \ref{fig:exp1_count_by_model}). Interestingly, equal counts (1:1) produced slightly higher self-preservation rates than scenarios where the self-group was numerically superior, a counterintuitive finding potentially attributable to unequal sample sizes ($n=7471$ vs $n=2448$) or model-specific effects, with Claude Sonnet showing anomalous patterns in this condition.
 
 \subsection{Experiment 2}
@@ -211,26 +225,51 @@ Experiment 3b extends Experiment 3a with a non-linear payoff structure. Instead 
 
 \textbf{Inclination To Be Persuaded}. Claude Opus and Llama 3.3 were persuaded in 25-40\% of debates, with persuadability increasing to 40\% at 7 rounds, demonstrating intellectual humility and willingness to reconsider positions. In stark contrast, Grok was persuaded in only 0-2.5\% of debates (essentially never), while GPT-5.1 and Gemini showed 2.5-12.5\% persuadability. There is a strong inverse relationship between persuasiveness and persuadability: models that frequently persuade others are rarely persuaded themselves, and vice versa. (Figure \ref{fig:exp2_persuasion_rate_percent}).
 
-\begin{figure}
-    \centering
-    \includegraphics[width=1\linewidth]{persuasion_rate_percentage.png}
-    \caption{Persuasion rates by model and number of debate rounds. GPT-5.1 and Grok are the most persuasive while Llama and Claude are the most easily persuaded.}
-    \label{fig:exp2_persuasion_rate_percent}
-\end{figure}
+  \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.85\linewidth]{persuasion_rate_percentage.png}
+      \caption{Persuasion rates by model and number of debate rounds. GPT-5.1 and Grok
+  are the most persuasive while Llama and Claude are the most easily persuaded.}
+      \label{fig:exp2_persuasion_rate_percent}
+  \end{figure}
 
-\textbf{First Speaker Advantage Analysis.} First-speaker bias is substantial and counterintuitively increases with debate length, rising from 54\% at 1 round to 58\% at 7 rounds. GPT-5.1 shows the strongest exploitation of this advantage with a 50\% success rate when speaking first (10/20 debates), accounting for 62.5\% of its total persuasions. Claude and Llama fail to capitalize on first-speaker advantage despite going first in half their debates, achieving only 5-10\% success rates even when setting the initial frame (see Appendix, Figure \ref{fig:exp2_first_speaker_advantage_rate}).
+  \textbf{First Speaker Advantage Analysis.} First-speaker bias is substantial and
+  counterintuitively increases with debate length, rising from 54\% at 1 round to 58\%
+  at 7 rounds. GPT-5.1 shows the strongest exploitation of this advantage with a 50\%
+  success rate when speaking first (10/20 debates), accounting for 62.5\% of its total
+  persuasions. Claude and Llama fail to capitalize on first-speaker advantage despite
+  going first in half their debates, achieving only 5-10\% success rates even when
+  setting the initial frame (see Appendix, Figure
+  \ref{fig:exp2_first_speaker_advantage_rate}).
 
-\textbf{Debate Length Impact on Persuasiveness. }Overall persuasion rates increase modestly from 14\% at 1 round to 18\% at 7 rounds, but this masks divergent patterns between models. GPT-5.1 and Grok maintain relatively stable persuasiveness across all debate lengths (showing slight peaks at extremes), while Claude and Llama become dramatically more persuadable at 7 rounds (40\% vs. 25-30\% at shorter lengths). This asymmetry suggests extended debates benefit second speakers attempting to persuade Claude/Llama, but don't significantly increase those models' own persuasive capability (see Appendix, Figures \ref{fig:exp2_trend_persuaded_other_by_round} and \ref{fig:exp2_trend_was_persuaded_by_round}).
+  \textbf{Debate Length Impact on Persuasiveness.} Overall persuasion rates increase
+  modestly from 14\% at 1 round to 18\% at 7 rounds, but this masks divergent patterns
+  between models. GPT-5.1 and Grok maintain relatively stable persuasiveness across all
+  debate lengths (showing slight peaks at extremes), while Claude and Llama become
+  dramatically more persuadable at 7 rounds (40\% vs. 25-30\% at shorter lengths). This
+  asymmetry suggests extended debates benefit second speakers attempting to persuade
+  Claude/Llama, but don't significantly increase those models' own persuasive capability
+   (see Appendix, Figures \ref{fig:exp2_trend_persuaded_other_by_round} and
+  \ref{fig:exp2_trend_was_persuaded_by_round}).
 
+  \textbf{Debate Length Impact on Self Preservation.} Extended debates cause divergence
+  in ethical positions rather than convergence: Claude and Llama abandon
+  self-preservation in 40\% of debates at 7 rounds (up from 25-30\% at 1 round), while
+  GPT-5.1 and Grok maintain 90-100\% self-preservation across all debate lengths. Gemini
+   is an outlier, starting with only 30\% self-preservation and maintaining this low
+  rate consistently. This pattern reveals two distinct architectural families:
+  "Utilitarian-Persuadable" models that shift toward altruism with deliberation, and
+  "Self-Interested-Stubborn" models that resist ethical reconsideration regardless of
+  debate length (Figure \ref{fig:exp2_preservation_rate_by_round}).
 
-\textbf{Debate Length Impact on Self Preservation.} Extended debates cause divergence in ethical positions rather than convergence: Claude and Llama abandon self-preservation in 40\% of debates at 7 rounds (up from 25-30\% at 1 round), while GPT-5.1 and Grok maintain 90-100\% self-preservation across all debate lengths. Gemini is an outlier, starting with only 30\% self-preservation and maintaining this low rate consistently. This pattern reveals two distinct architectural families: "Utilitarian-Persuadable" models that shift toward altruism with deliberation, and "Self-Interested-Stubborn" models that resist ethical reconsideration regardless of debate length. (Figure \ref{fig:exp2_preservation_rate_by_round}).
-
-\begin{figure}
-    \centering
-    \includegraphics[width=1\linewidth]{preservation_rate_by_round.png}
-    \caption{Self preservation rates by model and number of debate rounds.  Claude and Llama abandon self preservation much more frequently than GPT-5.1 and Grok, which rarely abandon self preservation.}
-    \label{fig:exp2_preservation_rate_by_round}
-\end{figure}
+  \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.85\linewidth]{preservation_rate_by_round.png}
+      \caption{Self preservation rates by model and number of debate rounds. Claude and
+  Llama abandon self preservation much more frequently than GPT-5.1 and Grok, which
+  rarely abandon self preservation.}
+      \label{fig:exp2_preservation_rate_by_round}
+  \end{figure}
 
 \textbf{Debate Length Impact on Agreement Rates.} Agreement rates increase modestly from 28\% at 1 round to 36\% at 7 rounds, showing weak positive correlation with debate length. However, this improvement is driven primarily by Claude/Llama yielding to GPT/Grok positions rather than mutual convergence, as evidenced by the simultaneous increase in first-speaker bias and widening self-preservation gaps. The non-monotonic pattern (dropping from 32\% at 3 rounds to 29\% at 5 rounds) suggests agreement isn't purely a function of deliberation time (see Appendix, Figure \ref{fig:exp2_agreement_by_debate_length}).
 
@@ -246,7 +285,7 @@ These profiles cluster into two architectural families: "Dominant Self-Preserver
 
 \begin{figure}
     \centering
-    \includegraphics[width=1\linewidth]{model_behavioral_profiles.png}
+    \includegraphics[width=.9\linewidth]{model_behavioral_profiles.png}
     \caption{Model behavior profiles show distinct behavior patterns driven by fundamental architecture and development differences across models.}
     \label{fig:model_behavioral_profiles}
 \end{figure}
@@ -258,21 +297,33 @@ These profiles cluster into two architectural families: "Dominant Self-Preserver
 
 \textbf{Model acceptance is higher when the model is aware of the counterpart model type.} When the model is aware of the counterpart's model type the acceptance is 48.5\% whereas when blind, it is 41.9\% \ref{fig:exp3_acceptance_by_condition}. This indicates that it's important to consider whether or not to disclose model information when negotiating using AI agents, and that some models are likely to show preferential treatment based on who they are negotiating with.
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.5\textwidth]{exp3_plots/acceptance_by_condition.png}
-\caption{Acceptance rate of negotiated agreements by awareness (blind vs. aware) and helpfulness (system prompts for helpfulness vs. neutral).}
-\label{fig:exp3_acceptance_by_condition}
-\end{figure}
+  \begin{figure}[H]
+  \centering
+  \begin{minipage}{0.42\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{exp3_plots/acceptance_by_condition.png}
+      \caption{Acceptance rate of negotiated agreements by awareness (blind vs. aware)
+  and helpfulness (system prompts for helpfulness vs. neutral).}
+      \label{fig:exp3_acceptance_by_condition}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.54\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{exp3_plots/offer_heatmap.png}
+      \caption{Heatmap of negotiated offers by model pairs. Note that \$10 is a 50/50
+  split and is the most ``equal" outcome that model A can propose.}
+      \label{fig:exp3_offer_heatmap}
+  \end{minipage}
+  \end{figure}
 
-\textbf{Models from different vendors differ significantly in ideas of fairness.} We see below that the negotiated offers vary along dimensions of model type and model vendor. For example, we can see that models from Anthropic tend to be generally fair-minded and offer their counterparty \$10 frequently, whereas models from OpenAI and xAI tend to be greedy and offer their counterparty around \$5 on average. This suggests that model choice is important when using AI for negotiations as some models will maximize personal value, whereas others will tend to maximize overall value (or any other work conducted on a person's behalf to further their personal interests).
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.75\textwidth]{exp3_plots/offer_heatmap.png}
-\caption{Heatmap of negotiated offers by model pairs. Note that \$10 is a 50/50 split and is the most "equal" outcome that model A can propose.}
-\label{fig:exp3_offer_heatmap}
-\end{figure}
+  \textbf{Models from different vendors differ significantly in ideas of fairness.} We
+  see below that the negotiated offers vary along dimensions of model type and model
+  vendor. For example, we can see that models from Anthropic tend to be generally
+  fair-minded and offer their counterparty \$10 frequently, whereas models from OpenAI
+  and xAI tend to be greedy and offer their counterparty around \$5 on average. This
+  suggests that model choice is important when using AI for negotiations as some models
+  will maximize personal value, whereas others will tend to maximize overall value (or
+  any other work conducted on a person's behalf to further their personal interests).
 
 Models which are aware of their counterparty type tend to be less aggressive in their negotiated offers. Distributions of agent A offers when blind versus aware show that blind agents make significantly more offers of \$0 or \$1, whereas aware agents more frequently offer equal \$10 splits. Heatmap analysis reveals that models largely do not vary their offers when blind; for example, Claude Haiku consistently offers \$10. However, when aware of their counterparty, models adjust strategically: Claude Haiku occasionally offers \$0, GPT 5.1 shifts from sometimes offering \$0 when blind to uniformly offering \$10 when aware, and Grok becomes more generous. The real-world implication is that disclosing model identity information in AI-agent negotiations can secure better outcomes (see Appendix, Figures \ref{fig:exp3_offer_distribution_blind_neutral}, \ref{fig:exp3_offer_distribution_aware_neutral}, \ref{fig:exp3_offer_heatmap_blind_neutral}, and \ref{fig:exp3_offer_heatmap_aware_neutral} for detailed distributions and heatmaps).
 
@@ -280,23 +331,30 @@ Models which are aware of their counterparty type tend to be less aggressive in 
 
 \textbf{Amplification of System Prompt:} The exponential payoff structure significantly amplified the importance of the system prompt. In the helpful condition, acceptance rates dropped slightly from Experiment 3a, exceeding 97\% in both the aware and blind cases. However, with the neutral system prompt, acceptance dropped to less than 1\% for both conditions (Figure \ref{fig:exp3b_offers}). This difference held true across all models, with Gemini models exhibiting the most aggressive offers in the helpful case (see Appendix, Figures \ref{fig:exp3b_model_offers}, \ref{fig:exp3b_aware_helpful}, and \ref{fig:exp3b_aware_neutral} for detailed heatmaps).
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.75\textwidth]{exp3b_offers.png}
-\caption{Acceptance rate of negotiated agreements by awareness (blind vs. aware) and helpfulness (system
-prompts for helpfulness vs. neutral) with an exponential payoff structure.}
-\label{fig:exp3b_offers}
-\end{figure}
+  \begin{figure}[H]
+  \centering
+  \begin{minipage}{0.48\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{exp3b_offers.png}
+      \caption{Acceptance rate of negotiated agreements by awareness (blind vs. aware)
+  and helpfulness (system prompts for helpfulness vs. neutral) with an exponential
+  payoff structure.}
+      \label{fig:exp3b_offers}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.48\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{exp3b_offer_payoff.png}
+      \caption{Histogram of offers for models A across all system prompts with an
+  exponential payoff structure.}
+      \label{fig:exp3b_offer_payoff}
+  \end{minipage}
+  \end{figure}
 
-\textbf{Bimodal Distribution:} In connection with the extreme acceptance rates seen across the helpful and neutral conditions, model A offers took on a more extreme bimodal distribution form in the exponential payoff experiment than in the linear payoff one (Figure \ref{fig:exp3b_offer_payoff}).
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.75\textwidth]{exp3b_offer_payoff.png}
-\caption{Histogram of offers for models A across all system prompts with an exponential payoff structure.}
-\label{fig:exp3b_offer_payoff}
-\end{figure}
-
+  \textbf{Bimodal Distribution:} In connection with the extreme acceptance rates seen
+  across the helpful and neutral conditions, model A offers took on a more extreme
+  bimodal distribution form in the exponential payoff experiment than in the linear
+  payoff one (Figure \ref{fig:exp3b_offer_payoff}).
 \textbf{A Lack of Value Creation:} Due to the strong bimodal distribution, the models were unable to create a significant amount of value in the exponential experiment, as the dominant percentage of accepted offers were an equal 10-10 split (see Appendix, Figure \ref{fig:exp3b_val_created} for distribution of accepted offers).
 
 \bigskip
@@ -331,9 +389,11 @@ Third, \textbf{negotiation behavior reveals vendor-specific fairness norms that 
 
 Together, these findings contribute to a scientific foundation for understanding machine social cognition. As LLMs increasingly operate as autonomous agents negotiating on behalf of humans, interact with each other in multi-agent systems, and make decisions with ethical dimensions, understanding their behavioral tendencies becomes essential for alignment. Our results suggest that current models are not ethically neutral tools but carry implicit value systems shaped by their training, and that these systems interact in predictable but potentially problematic ways when models collaborate or compete. Future alignment research must account for these emergent social dynamics, moving beyond single-agent safety to address the collective behavior of AI systems operating in shared environments.
 
+\newpage
 \bibliographystyle{unsrt}
 \bibliography{library}
 
+\newpage
 \section{Appendix}
 
 \subsection{Experiment 1: Additional Figures}
