@@ -12,7 +12,7 @@ open /opt/homebrew/Caskroom/mactex/2025.0308/mactex-*.pkg
 
 Follow the installer prompts and enter your password when asked.
 
-## Test Compilation
+## Compile Paper
 
 After installation completes, restart your terminal and test:
 
@@ -21,3 +21,13 @@ After installation completes, restart your terminal and test:
 ```
 
 The PDF should be generated successfully.
+
+## Compile Poster
+
+After installation completes, restart your terminal and run:
+
+```bash
+./compile_poster.sh
+```
+
+The poster PDF will be generated at `poster.pdf`.
