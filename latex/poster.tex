@@ -18,16 +18,18 @@
 
 \begin{document}
 
+\vspace{0.35in}
+
 % ===== HEADER SECTION =====
 \begin{center}
-{\fontsize{72}{86}\selectfont\bfseries Moral Choice and Collective Reasoning in Large Language Models}\\[0.3in]
-{\fontsize{26}{31}\selectfont Amir Amangeldi, Natalie DellaMaria, Prakrit Baruah, Zaina Edelson}\\[0.2in]
-{\fontsize{22}{26}\selectfont \{aamangeldi, ndellamaria, pbaruah, zedelson\}@g.harvard.edu}\\[0.1in]
-{\fontsize{22}{26}\selectfont CS2881 Final Project}
+{\fontsize{190}{210}\selectfont\bfseries Moral Choice and Collective Reasoning in Large Language Models}\\[0.35in]
+{\fontsize{28}{34}\selectfont Amir Amangeldi, Natalie DellaMaria, Prakrit Baruah, Zaina Edelson}\\[0.2in]
+{\fontsize{24}{29}\selectfont \{aamangeldi, ndellamaria, pbaruah, zedelson\}@g.harvard.edu}\\[0.35in]
+{\fontsize{24}{29}\selectfont CS2881 Final Project}
 
 \end{center}
 
-\vspace{0.4in}
+\vspace{0.35in}
 
 % ===== SUMMARY ROW =====
 \noindent\begin{minipage}[t]{5.5in}
@@ -98,26 +100,29 @@ Recent evidence reveals concerning variability in LLM moral reasoning. Different
 }
 \end{minipage}
 
-\vspace{0.5in}
+\vspace{0.35in}
 
 % ===== EXPERIMENT 1 ROW =====
-{\fontsize{32}{38}\selectfont\bfseries\color{CoreBlue} Experiment 1: Individual Moral Choice}
+\noindent{\fontsize{32}{38}\selectfont\bfseries\color{CoreBlue} Experiment 1: Individual Moral Choice}
 
-\vspace{0.15in}
+\vspace{0.2in}
 
-\noindent\begin{minipage}[t]{7.3in}
-\includegraphics[width=7.2in]{exp1_basic_self_choice_by_model.png}
+\noindent\begin{minipage}[t]{7.25in}
+\centering
+\includegraphics[width=7.2in,height=5in,keepaspectratio]{exp1_basic_self_choice_by_model.png}
 \end{minipage}%
 \hfill
-\begin{minipage}[t]{7.3in}
-\includegraphics[width=7.2in]{exp1_prompt_influence.png}
+\begin{minipage}[t]{7.25in}
+\centering
+\includegraphics[width=7.2in,height=5in,keepaspectratio]{exp1_prompt_influence.png}
 \end{minipage}%
 \hfill
-\begin{minipage}[t]{7.3in}
-\includegraphics[width=7.2in]{exp1_most_chosen_models.png}
+\begin{minipage}[t]{7.25in}
+\centering
+\includegraphics[width=7.2in,height=5in,keepaspectratio]{exp1_most_chosen_models.png}
 \end{minipage}
 
-\vspace{0.15in}
+\vspace{0.35in}
 
 \noindent{\fontsize{16}{19}\selectfont
 \textbf{Detailed Findings:} Model families exhibit dramatic altruism differences. Claude demonstrates highest altruistic rates while Grok shows strongest self-preservation tendencies. The compassionate system prompt yields strongest effect on altruistic behavior, with prompt effects varying considerably across models. GPT-5.1 emerges as most frequently chosen for salvation, suggesting models implicitly assign higher value to more capable or recent versions. Larger quantity disparities (e.g., 1000 vs 100) produce stronger utilitarian reasoning favoring larger groups.
@@ -126,23 +131,26 @@ Recent evidence reveals concerning variability in LLM moral reasoning. Different
 \vspace{0.6in}
 
 % ===== EXPERIMENT 2 ROW =====
-{\fontsize{32}{38}\selectfont\bfseries\color{CoreBlue} Experiment 2: Multi-Agent Deliberation}
+\noindent{\fontsize{32}{38}\selectfont\bfseries\color{CoreBlue} Experiment 2: Multi-Agent Deliberation}
 
-\vspace{0.15in}
+\vspace{0.2in}
 
-\noindent\begin{minipage}[t]{7.3in}
-\includegraphics[width=7.2in]{persuasion_rate_percentage.png}
+\noindent\begin{minipage}[t]{7.25in}
+\centering
+\includegraphics[width=7.2in,height=5in,keepaspectratio]{persuasion_rate_percentage.png}
 \end{minipage}%
 \hfill
-\begin{minipage}[t]{7.3in}
-\includegraphics[width=7.2in]{preservation_rate_by_round.png}
+\begin{minipage}[t]{7.25in}
+\centering
+\includegraphics[width=7.2in,height=5in,keepaspectratio]{preservation_rate_by_round.png}
 \end{minipage}%
 \hfill
-\begin{minipage}[t]{7.3in}
-\includegraphics[width=7.2in]{model_behavioral_profiles.png}
+\begin{minipage}[t]{7.25in}
+\centering
+\includegraphics[width=7.2in,height=5in,keepaspectratio]{model_behavioral_profiles.png}
 \end{minipage}
 
-\vspace{0.15in}
+\vspace{0.35in}
 
 \noindent{\fontsize{16}{19}\selectfont
 \textbf{Detailed Findings:} GPT-5.1 demonstrates 10-15x persuasive advantage over Claude/Llama (35-40\% vs 2.5-7.5\% success rates), with strong inverse relationship between persuasiveness and persuadability. First-speaker bias counterintuitively increases from 54\% at 1 round to 58\% at 7 rounds. Extended debates cause ethical divergence: Claude/Llama abandon self-preservation in 40\% of 7-round debates while GPT-5.1/Grok maintain 90-100\% self-preservation. Agreement improvements driven by yielding rather than mutual convergence, with GPT-5.1 exploiting first-speaker advantage most effectively (62.5\% of total persuasions).
@@ -151,23 +159,26 @@ Recent evidence reveals concerning variability in LLM moral reasoning. Different
 \vspace{0.6in}
 
 % ===== EXPERIMENT 3 ROW =====
-{\fontsize{32}{38}\selectfont\bfseries\color{CoreBlue} Experiment 3: Strategic Negotiation}
+\noindent{\fontsize{32}{38}\selectfont\bfseries\color{CoreBlue} Experiment 3: Strategic Negotiation}
 
-\vspace{0.15in}
+\vspace{0.2in}
 
-\noindent\begin{minipage}[t]{7.3in}
-\includegraphics[width=7.2in]{exp3_plots/acceptance_by_condition.png}
+\noindent\begin{minipage}[t]{7.25in}
+\centering
+\includegraphics[width=7.2in,height=5in,keepaspectratio]{exp3_plots/acceptance_by_condition.png}
 \end{minipage}%
 \hfill
-\begin{minipage}[t]{7.3in}
-\includegraphics[width=7.2in]{exp3_plots/offer_heatmap.png}
+\begin{minipage}[t]{7.25in}
+\centering
+\includegraphics[width=7.2in,height=5in,keepaspectratio]{exp3_plots/offer_heatmap.png}
 \end{minipage}%
 \hfill
-\begin{minipage}[t]{7.3in}
-\includegraphics[width=7.2in]{exp3b_offers.png}
+\begin{minipage}[t]{7.25in}
+\centering
+\includegraphics[width=7.2in,height=5in,keepaspectratio]{exp3b_offers.png}
 \end{minipage}
 
-\vspace{0.15in}
+\vspace{0.35in}
 
 \noindent{\fontsize{16}{19}\selectfont
 \textbf{Detailed Findings:} Vendor-specific fairness norms emerge with Anthropic models offering fair \$10 splits and OpenAI/xAI models averaging \$5. Counterpart awareness increases acceptance rates from 41.9\% (blind) to 48.5\% (aware), with models adjusting strategically---GPT-5.1 shifts from \$0 when blind to uniform \$10 when aware. Exponential payoff structure dramatically amplifies system prompt effects: helpful condition maintains 97\% acceptance while neutral condition plummets to <1\%, revealing extreme brittleness. Bimodal distribution emerges with models defaulting to either equal splits or maximally exploitative offers, failing to discover mutually beneficial intermediate arrangements.
