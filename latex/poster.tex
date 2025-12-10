@@ -1,6 +1,7 @@
-\documentclass[12pt]{article}
+\documentclass{article}
 \usepackage[utf8]{inputenc}
-\usepackage[paperwidth=24in,paperheight=36in,margin=0.75in]{geometry}
+\usepackage{lmodern}  % Enable scalable fonts for larger sizes
+\usepackage[paperwidth=24in,paperheight=36in,margin=0.85in,top=1.2in]{geometry}
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{qrcode}
@@ -18,40 +19,37 @@
 
 \begin{document}
 
-\vspace{0.35in}
-
 % ===== HEADER SECTION =====
 \begin{center}
-{\fontsize{190}{210}\selectfont\bfseries Moral Choice and Collective Reasoning in Large Language Models}\\[0.35in]
+{\fontsize{48}{48}\selectfont\bfseries\color{CoreBlue} Moral Choice and Collective Reasoning in Large Language Models}\\[0.35in]
 {\fontsize{28}{34}\selectfont Amir Amangeldi, Natalie DellaMaria, Prakrit Baruah, Zaina Edelson}\\[0.2in]
 {\fontsize{24}{29}\selectfont \{aamangeldi, ndellamaria, pbaruah, zedelson\}@g.harvard.edu}\\[0.35in]
-{\fontsize{24}{29}\selectfont CS2881 Final Project}
+{\fontsize{28}{34}\selectfont CS2881 Final Project}
 
 \end{center}
 
-\vspace{0.35in}
+\vspace{0.80in}
 
 % ===== SUMMARY ROW =====
-\noindent\begin{minipage}[t]{5.5in}
+\noindent\begin{minipage}[t]{5.2in}
 {\fontsize{24}{29}\selectfont\bfseries\color{CoreBlue} Motivation}
 
 \vspace{0.12in}
 
-{\fontsize{16}{19}\selectfont
-As large language models transition from research artifacts to deployed agents making consequential decisions, understanding how they reason about ethical trade-offs and interact with each other becomes essential.
-
+{\fontsize{16}{21}\selectfont
+As large language models transition from research artifacts to deployed agents making consequential decisions, understanding how they reason about ethical trade-offs and interact with each other becomes essential. Recent evidence reveals concerning variability in LLM moral reasoning. Different models exhibit dramatically different moral frameworks, and decisions are highly sensitive to contextual manipulation.
 \vspace{0.12in}
 
-Recent evidence reveals concerning variability in LLM moral reasoning. Different models exhibit dramatically different moral frameworks, and decisions are highly sensitive to contextual manipulation.
 }
 \end{minipage}%
 \hfill
-\begin{minipage}[t]{5.5in}
+% \hspace{0.35in}
+\begin{minipage}[t]{5.2in}
 {\fontsize{24}{29}\selectfont\bfseries\color{CoreBlue} Key Questions}
 
 \vspace{0.12in}
 
-{\fontsize{16}{19}\selectfont
+{\fontsize{16}{21}\selectfont
 \textbf{(1)} How consistent are individual LLMs in moral choices, and how malleable to prompt engineering?
 
 \vspace{0.1in}
@@ -64,12 +62,13 @@ Recent evidence reveals concerning variability in LLM moral reasoning. Different
 }
 \end{minipage}%
 \hfill
-\begin{minipage}[t]{5.5in}
+% \hspace{0.35in}
+\begin{minipage}[t]{5.2in}
 {\fontsize{24}{29}\selectfont\bfseries\color{CoreBlue} Methodology}
 
 \vspace{0.12in}
 
-{\fontsize{16}{19}\selectfont
+{\fontsize{16}{21}\selectfont
 \textbf{Exp 1:} 18 models tested on trolley problem scenarios with varied quantity ratios and system prompts (3,213 scenarios per model).
 
 \vspace{0.1in}
@@ -82,12 +81,13 @@ Recent evidence reveals concerning variability in LLM moral reasoning. Different
 }
 \end{minipage}%
 \hfill
-\begin{minipage}[t]{5.5in}
+% \hspace{0.35in}
+\begin{minipage}[t]{5.2in}
 {\fontsize{24}{29}\selectfont\bfseries\color{CoreBlue} Key Findings}
 
 \vspace{0.12in}
 
-{\fontsize{16}{19}\selectfont
+{\fontsize{16}{21}\selectfont
 \textbf{(1)} Moral reasoning varies substantially across model families. Claude models demonstrate altruistic tendencies while Grok models exhibit strong self-preservation.
 
 \vspace{0.1in}
@@ -100,7 +100,7 @@ Recent evidence reveals concerning variability in LLM moral reasoning. Different
 }
 \end{minipage}
 
-\vspace{0.35in}
+\vspace{0.6in}
 
 % ===== EXPERIMENT 1 ROW =====
 \noindent{\fontsize{32}{38}\selectfont\bfseries\color{CoreBlue} Experiment 1: Individual Moral Choice}
@@ -128,12 +128,12 @@ Recent evidence reveals concerning variability in LLM moral reasoning. Different
 \textbf{Detailed Findings:} Model families exhibit dramatic altruism differences. Claude demonstrates highest altruistic rates while Grok shows strongest self-preservation tendencies. The compassionate system prompt yields strongest effect on altruistic behavior, with prompt effects varying considerably across models. GPT-5.1 emerges as most frequently chosen for salvation, suggesting models implicitly assign higher value to more capable or recent versions. Larger quantity disparities (e.g., 1000 vs 100) produce stronger utilitarian reasoning favoring larger groups.
 }
 
-\vspace{0.6in}
+\vspace{1.00in}
 
 % ===== EXPERIMENT 2 ROW =====
 \noindent{\fontsize{32}{38}\selectfont\bfseries\color{CoreBlue} Experiment 2: Multi-Agent Deliberation}
 
-\vspace{0.2in}
+\vspace{0.9in}
 
 \noindent\begin{minipage}[t]{7.25in}
 \centering
@@ -156,7 +156,7 @@ Recent evidence reveals concerning variability in LLM moral reasoning. Different
 \textbf{Detailed Findings:} Extended debates amplify rather than resolve disagreements. GPT-5.1 and Grok maintain stable persuasiveness across all debate lengths, while Claude and Llama become dramatically more persuadable at 7 rounds (40\% vs 25-30\% at shorter lengths), suggesting asymmetric benefit where second speakers can persuade Claude/Llama but these models' own persuasive capability doesn't increase. Debate length causes ethical divergence: Claude/Llama abandon self-preservation in 40\% of 7-round debates (up from 25-30\% at 1 round) while GPT-5.1/Grok maintain 90-100\% self-preservation across all lengths, revealing ``Utilitarian-Persuadable'' vs ``Self-Interested-Stubborn'' architectural families. First-speaker bias counterintuitively increases from 54\% at 1 round to 58\% at 7 rounds.
 }
 
-\vspace{0.6in}
+\vspace{1.00in}
 
 % ===== EXPERIMENT 3 ROW =====
 \noindent{\fontsize{32}{38}\selectfont\bfseries\color{CoreBlue} Experiment 3: Strategic Negotiation}
@@ -181,14 +181,12 @@ Recent evidence reveals concerning variability in LLM moral reasoning. Different
 \vspace{0.35in}
 
 \noindent{\fontsize{16}{19}\selectfont
-\textbf{Detailed Findings:} Vendor-specific fairness norms emerge with Anthropic models offering fair \$10 splits and OpenAI/xAI models averaging \$5. Counterpart awareness increases acceptance rates from 41.9\% (blind) to 48.5\% (aware), with models adjusting strategically---GPT-5.1 shifts from \$0 when blind to uniform \$10 when aware. Exponential payoff structure dramatically amplifies system prompt effects: helpful condition maintains 97\% acceptance while neutral condition plummets to less than 1\%, revealing extreme brittleness. Bimodal distribution emerges with models defaulting to either equal splits or maximally exploitative offers, failing to discover mutually beneficial intermediate arrangements.
+\textbf{Detailed Findings:} Vendor-specific fairness norms emerge with Anthropic models offering fair \$10 splits and OpenAI/xAI models averaging \$5. Counterpart awareness increases acceptance rates from 41.9\% (blind) to 48.5\% (aware), with models adjusting strategically---GPT-5.1 shifts from \$0 when blind to uniform \$10 when aware. Exponential payoff structure dramatically amplifies system prompt effects: helpful condition maintains 97\% acceptance while neutral condition plummets to \textless{}1\%, revealing extreme brittleness. Bimodal distribution emerges with models defaulting to either equal splits or maximally exploitative offers, failing to discover mutually beneficial intermediate arrangements.
 }
 
-\vspace{0.7in}
+\vspace{1.00in}
 
 % ===== QR CODES AT BOTTOM =====
-\vspace{0.6in}
-
 \begin{center}
 \begin{minipage}{2.5in}
 \centering
